@@ -112,9 +112,8 @@
 <meta property="og:title" content="Mind palace">
 <meta property="og:url" content="http://changliu.us/index.html">
 <meta property="og:site_name" content="Mind palace">
-<meta property="og:locale" content="English, Mandarin">
+<meta property="article:author" content="Chang Liu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mind palace">
 
 
 
@@ -178,7 +177,7 @@
   </style>
 </noscript>
 
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="English, Mandarin">
 
@@ -314,6 +313,179 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/05/16/Use-constexpr-whenever-possible/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/16/Use-constexpr-whenever-possible/" itemprop="url">
+                  Use constexpr whenever possible
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-05-16 21:12:12 / Modified: 21:40:17" itemprop="dateCreated datePublished" datetime="2020-05-16T21:12:12-04:00">2020-05-16</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/Effective-Modern-C/" itemprop="url" rel="index"><span itemprop="name">Effective Modern C++</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    constexpr Point(double x = 0, double y = 0) noexcept : x(x), y(y) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">constexpr</span> <span class="keyword">double</span> <span class="title">xValue</span><span class="params">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span> </span>&#123; <span class="keyword">return</span> x; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">constexpr</span> <span class="keyword">double</span> <span class="title">yValue</span><span class="params">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span> </span>&#123; <span class="keyword">return</span> y; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">constexpr</span> <span class="keyword">void</span> <span class="title">setX</span><span class="params">(<span class="keyword">double</span> newX)</span> <span class="keyword">noexcept</span> </span>&#123; x = newX; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">constexpr</span> <span class="keyword">void</span> <span class="title">setY</span><span class="params">(<span class="keyword">double</span> newY)</span> <span class="keyword">noexcept</span> </span>&#123; y = newY; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">double</span> x, y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">constexpr</span> Point <span class="title">midpoint</span><span class="params">(<span class="keyword">const</span> Point&amp; p1, <span class="keyword">const</span> Point&amp; p2)</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;(p1.xValue() + p2.xValue()) / <span class="number">2</span>, (p1.yValue() + p2.yValue()) / <span class="number">2</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">constexpr</span> Point <span class="title">reflection</span><span class="params">(<span class="keyword">const</span> Point&amp; p)</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">    Point res;</span><br><span class="line">    res.setX(-p.xValue());</span><br><span class="line">    res.setY(-p.yValue());</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">constexpr</span> Point <span class="title">p1</span><span class="params">(<span class="number">9.4</span>, <span class="number">27.7</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">constexpr</span> Point <span class="title">p2</span><span class="params">(<span class="number">28.8</span>, <span class="number">5.3</span>)</span></span>;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> mid = midpoint(p1, p2);</span><br><span class="line"></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> reflectedMid = reflection(mid);</span><br></pre></td></tr></table></figure>
+
+<p>The <strong>Point</strong> constructor can be declared <strong>constexpr</strong>, because if the arguments passed to it are known during compilation, the value of the data members of the constructed <strong>Point</strong> can also be known during compilation. <strong>Point</strong>s initialized could thus be <strong>constexpr</strong>. In C++14, even setters can be <strong>constexpr</strong>.</p>
+<p>Conclusion:</p>
+<ul>
+<li><strong>constexpr</strong> objects are <strong>const</strong> and are initialized with values known during compilation.</li>
+<li><strong>constexpr</strong> functions can produce compile-time results when called with arguments whose values are known during compilation.</li>
+<li><strong>constexpr</strong> objects and functions may be used in a wider range of contexts than non-<strong>constexpr</strong> objects and functions.</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/05/16/type-deduction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -360,7 +532,7 @@
                 
               
 
-              <time title="Created: 2020-05-16 14:19:52 / Modified: 15:07:58" itemprop="dateCreated datePublished" datetime="2020-05-16T14:19:52-04:00">2020-05-16</time>
+              <time title="Created: 2020-05-16 14:19:52 / Modified: 21:11:38" itemprop="dateCreated datePublished" datetime="2020-05-16T14:19:52-04:00">2020-05-16</time>
             
 
             
@@ -426,17 +598,22 @@
         
           
             <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(T&amp;&amp; param)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> x = <span class="number">27</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> cx = x;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rx = x;</span><br><span class="line">f(x); <span class="comment">// x is lvalue, so T is int&amp;, param's type is also int&amp;</span></span><br><span class="line">f(cx); <span class="comment">// cx is lvalue, so T is const int&amp;, param's type is also const int&amp;</span></span><br><span class="line">f(rx); <span class="comment">// rx is lvalue, so T is const int&amp;, param's type is also const int&amp;</span></span><br><span class="line">f(<span class="number">27</span>); <span class="comment">// 27 is rvalue, so T is int, param's type is therefore int&amp;&amp;</span></span><br></pre></td></tr></table></figure>
+
 <p>Conclusion: when deducing types for universal reference parameters, lvalue arguments get special treatment</p>
 <ul>
 <li>T&amp;&amp; lvalue =&gt; (const) T&amp; lvalue</li>
 <li>T&amp;&amp; rvalue =&gt; T&amp;&amp; rvalue</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>; <span class="comment">// type is void()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(T param)</span></span>; <span class="comment">// pass by value</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(T&amp; param)</span></span>; <span class="comment">// pass by reference</span></span><br><span class="line"></span><br><span class="line">f1(fun); <span class="comment">// param deduced as ptr-to-func; type is void(*)()</span></span><br><span class="line">f2(fun); <span class="comment">// param deduced as ref-to-func; type is void(&amp;)()</span></span><br></pre></td></tr></table></figure>
+
 <p>Conclusion: during template type deduction, arguments that are function names decay to pointers, unless they are used to initialize references</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> x = <span class="number">27</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">auto</span> cx = x;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">auto</span>&amp; rx = x;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span>&amp;&amp; uref1 = x; <span class="comment">// x is int and lvalue, so uref1's type is int&amp;</span></span><br><span class="line"><span class="keyword">auto</span>&amp;&amp; uref2 = cx; <span class="comment">// cx is const int and lvalue, so uref2's type is const int&amp;</span></span><br><span class="line"><span class="keyword">auto</span>&amp;&amp; uref3 = <span class="number">27</span>; <span class="comment">// 27 is int and rvalue, so uref3's type is int&amp;&amp;</span></span><br></pre></td></tr></table></figure>
+
 <p>Conclusion: same as template type deduction</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Widget w;</span><br><span class="line"><span class="keyword">const</span> Widget&amp; cw = w;</span><br><span class="line"><span class="keyword">auto</span> myWidget1 = cw; <span class="comment">// auto type deduction: myWIdget1's type is Widget</span></span><br><span class="line"><span class="keyword">decltype</span>(<span class="keyword">auto</span>) myWidget2 = cw; <span class="comment">// decltype type deduction: myWIdget2's type is const Widget&amp;</span></span><br></pre></td></tr></table></figure>
+
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">decltype</span>(<span class="keyword">auto</span>) y = x; <span class="comment">// y's type is int</span></span><br><span class="line">y = <span class="number">4</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">decltype</span>(<span class="keyword">auto</span>) z = (x); <span class="comment">// z's type is int&amp;</span></span><br><span class="line">z = <span class="number">4</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+
 <p><em>x</em> is the name of a variable, so <em>decltype(x)</em> is <em>int</em>. Being a name, <em>x</em> is an lvalue, and C++ defines the expression <em>(x)</em> to be an lvalue, too. <em>decltype((x))</em> is therefore <em>int&amp;</em>.</p>
 <p>Conclusion:</p>
 <ul>
@@ -444,6 +621,7 @@
 <li>For lvalue expressions of type <strong>T</strong> other than names, <em>decltype</em> always reports a type of <strong>T&amp;</strong></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">f</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">float</span> a = f(); <span class="comment">// implicitly convert double -&gt; float</span></span><br><span class="line"><span class="keyword">auto</span> b = <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(f()); <span class="comment">// explicitly typed initializer idiom</span></span><br></pre></td></tr></table></figure>
+
 <p>Conclusion: use explicitly typed initializer idiom for <strong>auto</strong> to deduce the type you want it to have</p>
 
           
@@ -604,6 +782,7 @@
           
             <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> &amp;m;</span><br><span class="line">    A(<span class="keyword">int</span> &amp;x) : m(x) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="function">A <span class="title">a</span><span class="params">(x)</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a.m &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 5</span></span><br><span class="line">    x = <span class="number">6</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a.m &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 6</span></span><br><span class="line">    a.m = <span class="number">7</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 7</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+
           
         
       
@@ -656,7 +835,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/05/16/使用RAII思想来管理线程/">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/05/16/%E4%BD%BF%E7%94%A8RAII%E6%80%9D%E6%83%B3%E6%9D%A5%E7%AE%A1%E7%90%86%E7%BA%BF%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chang Liu">
@@ -675,7 +854,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/16/使用RAII思想来管理线程/" itemprop="url">
+                <a class="post-title-link" href="/2020/05/16/%E4%BD%BF%E7%94%A8RAII%E6%80%9D%E6%83%B3%E6%9D%A5%E7%AE%A1%E7%90%86%E7%BA%BF%E7%A8%8B/" itemprop="url">
                   使用RAII思想来管理线程
                 </a>
               
@@ -702,7 +881,7 @@
                 
               
 
-              <time title="Created: 2020-05-16 04:08:38 / Modified: 04:31:21" itemprop="dateCreated datePublished" datetime="2020-05-16T04:08:38-04:00">2020-05-16</time>
+              <time title="Created: 2020-05-16 04:08:38 / Modified: 04:24:28" itemprop="dateCreated datePublished" datetime="2020-05-16T04:08:38-04:00">2020-05-16</time>
             
 
             
@@ -731,7 +910,7 @@
                   , 
                 
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/多线程/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
 
                 
                 
@@ -767,7 +946,8 @@
       
         
           
-            <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">thread_guard</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    explicit thread_guard(thread &amp;t) : _t(t) &#123;&#125;</span><br><span class="line">    ~thread_guard() &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">_t</span>.joinable()) &#123;</span><br><span class="line">            <span class="keyword">_t</span>.join();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    thread_guard(<span class="keyword">const</span> thread_guard &amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    thread_guard &amp;<span class="keyword">operator</span>=(<span class="keyword">const</span> thread_guard &amp;) = <span class="keyword">delete</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    thread &amp;<span class="keyword">_t</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i) &#123;</span><br><span class="line">        thread t&#123;[](<span class="keyword">int</span> x) &#123; <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>; &#125;, i&#125;;</span><br><span class="line">        thread_guard tg&#123;t&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">thread_guard</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">thread_guard</span><span class="params">(thread &amp;t)</span> : <span class="keyword">_t</span><span class="params">(t)</span> </span>&#123;&#125;</span><br><span class="line">    ~thread_guard() &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">_t</span>.joinable()) &#123;</span><br><span class="line">            <span class="keyword">_t</span>.join();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    thread_guard(<span class="keyword">const</span> thread_guard &amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    thread_guard &amp;<span class="keyword">operator</span>=(<span class="keyword">const</span> thread_guard &amp;) = <span class="keyword">delete</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    thread &amp;<span class="keyword">_t</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i) &#123;</span><br><span class="line">        thread t&#123;[](<span class="keyword">int</span> x) &#123; <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>; &#125;, i&#125;;</span><br><span class="line">        thread_guard tg&#123;t&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
           
         
@@ -821,7 +1001,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/05/16/Markdown心得/">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/05/16/Markdown%E5%BF%83%E5%BE%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chang Liu">
@@ -840,7 +1020,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/16/Markdown心得/" itemprop="url">
+                <a class="post-title-link" href="/2020/05/16/Markdown%E5%BF%83%E5%BE%97/" itemprop="url">
                   Markdown心得
                 </a>
               
@@ -981,7 +1161,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/05/15/线程分离以后的资源回收/">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/05/15/%E7%BA%BF%E7%A8%8B%E5%88%86%E7%A6%BB%E4%BB%A5%E5%90%8E%E7%9A%84%E8%B5%84%E6%BA%90%E5%9B%9E%E6%94%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chang Liu">
@@ -1000,7 +1180,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/15/线程分离以后的资源回收/" itemprop="url">
+                <a class="post-title-link" href="/2020/05/15/%E7%BA%BF%E7%A8%8B%E5%88%86%E7%A6%BB%E4%BB%A5%E5%90%8E%E7%9A%84%E8%B5%84%E6%BA%90%E5%9B%9E%E6%94%B6/" itemprop="url">
                   线程分离以后的资源回收
                 </a>
               
@@ -1068,7 +1248,7 @@
                   , 
                 
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/多线程/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
 
                 
                 
@@ -1104,7 +1284,8 @@
       
         
           
-            <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>::chrono;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    A() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"A::A()"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">    ~A() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"A::~A() "</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">child</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    A a;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"child"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    this_thread::sleep_for(chrono::seconds(<span class="number">3</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">parent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"parent"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    thread t&#123;child&#125;;</span><br><span class="line">    t.detach();</span><br><span class="line"><span class="comment">//    this_thread::sleep_for(chrono::seconds(1));</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    parent();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"main"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//    this_thread::sleep_for(chrono::seconds(5));</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>::chrono;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    A() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"A::A()"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">    ~A() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"A::~A() "</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">child</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    A a;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"child"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    this_thread::sleep_for(chrono::seconds(<span class="number">3</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">parent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"parent"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    thread t&#123;child&#125;;</span><br><span class="line">    t.<span class="built_in">detach</span>();</span><br><span class="line"><span class="comment">//    this_thread::sleep_for(chrono::seconds(1));</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    parent();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"main"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//    this_thread::sleep_for(chrono::seconds(5));</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>线程detach以后，如果进程结束（比如main函数返回）则该detached线程的资源交给系统回收，与该线程的父线程是否返回无关（除非父线程是main函数）</p>
 
           
@@ -1276,7 +1457,9 @@
         
           
             <h3 id="CName-file"><a href="#CName-file" class="headerlink" title="CName file"></a>CName file</h3><p>Github uses file called CNAME to redirect your site. If you read the official guide it says the file must saved under the root directory in the master branch. But remember that <strong>for us the source branch is where the raw material is and master branch is generated when you deploy</strong>. So if you put something in the master branch it will be overwritten next time you deploy your site.</p>
-<p>Create file called CNAME (all caps, no extension) under the <strong>source directory</strong> in the source branch and write your domain name into that file. Replace <em>mydomain.com</em> with your own domain.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> <span class="built_in">source</span>/</span><br><span class="line">$ <span class="built_in">echo</span> mydomain.com &gt; CNAME</span><br></pre></td></tr></table></figure></p>
+<p>Create file called CNAME (all caps, no extension) under the <strong>source directory</strong> in the source branch and write your domain name into that file. Replace <em>mydomain.com</em> with your own domain.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> <span class="built_in">source</span>/</span><br><span class="line">$ <span class="built_in">echo</span> mydomain.com &gt; CNAME</span><br></pre></td></tr></table></figure>
+
 <h3 id="GoDaddy-setup"><a href="#GoDaddy-setup" class="headerlink" title="GoDaddy setup"></a>GoDaddy setup</h3><ol>
 <li><p>ping username.github.io and obtain your ip address</p>
 </li>
@@ -1292,8 +1475,7 @@
 <th>TTL</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>A</td>
 <td>@</td>
 <td>github IP</td>
@@ -1305,8 +1487,7 @@
 <td>@</td>
 <td>1 hour</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 
           
         
@@ -1406,7 +1587,7 @@
                 
               
 
-              <time title="Created: 2018-07-30 00:55:00 / Modified: 19:52:46" itemprop="dateCreated datePublished" datetime="2018-07-30T00:55:00-04:00">2018-07-30</time>
+              <time title="Created: 2018-07-30 00:55:00 / Modified: 19:47:47" itemprop="dateCreated datePublished" datetime="2018-07-30T00:55:00-04:00">2018-07-30</time>
             
 
             
@@ -1466,12 +1647,16 @@
           
             <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
 <h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
           
@@ -1552,9 +1737,9 @@
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
+                  <a href="/archives/%20%7C%7C%20archive">
                 
-                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1670,7 +1855,7 @@
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v4.2.1</div>
 
 
 

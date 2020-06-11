@@ -29,9 +29,10 @@
 <meta property="og:site_name" content="Mind palace">
 <meta property="og:description" content="O(n) 用hashmap维护下标l表示上一个发生重复的位置 123456789class Solution:    def lengthOfLongestSubstring(self, s: str) -&gt; int:        d &#x3D; &amp;#123;&amp;#125;        res, l &#x3D; 0, -1        for r, c in enumerate(s):">
 <meta property="article:published_time" content="2020-05-31T03:36:39.000Z">
-<meta property="article:modified_time" content="2020-05-31T03:37:58.807Z">
+<meta property="article:modified_time" content="2020-06-11T01:05:29.237Z">
 <meta property="article:author" content="Chang Liu">
 <meta property="article:tag" content="LeetCode">
+<meta property="article:tag" content="Hash table">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://changliu.us/2020/05/30/3-Longest-Substring-Without-Repeating-Characters/">
@@ -144,7 +145,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">11</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">30</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -238,10 +239,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-05-30 23:36:39 / Modified: 23:37:58" itemprop="dateCreated datePublished" datetime="2020-05-30T23:36:39-04:00">2020-05-30</time>
+              <time title="Created: 2020-05-30 23:36:39" itemprop="dateCreated datePublished" datetime="2020-05-30T23:36:39-04:00">2020-05-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-10 21:05:29" itemprop="dateModified" datetime="2020-06-10T21:05:29-04:00">2020-06-10</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -297,6 +304,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">hm</span><span class="params">(<span class="number">256</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            start = <span class="built_in">max</span>(start, hm[s[i]]); <span class="comment">// 一定要用max更新start，否则见反例abba</span></span><br><span class="line">            hm[s[i]] = i;</span><br><span class="line">            res = <span class="built_in">max</span>(res, i - start);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>O(n) two pointers</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">bool</span> hashmap[<span class="number">256</span>] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = i; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">while</span> (j &lt; n &amp;&amp; !hashmap[s[j]]) &#123;</span><br><span class="line">                hashmap[s[j++]] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            res = <span class="built_in">max</span>(res, j - i);</span><br><span class="line">            hashmap[s[i]] = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -307,6 +315,7 @@
           
           <div class="post-tags">
               <a href="/tags/LeetCode/" rel="tag"><i class="fa fa-tag"></i> LeetCode</a>
+              <a href="/tags/Hash-table/" rel="tag"><i class="fa fa-tag"></i> Hash table</a>
           </div>
 
         
@@ -430,7 +439,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

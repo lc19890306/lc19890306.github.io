@@ -29,9 +29,11 @@
 <meta property="og:site_name" content="Mind palace">
 <meta property="og:description" content="O(n) time O(1) space 12345678910class Solution:    def reverse(self, x: int) -&gt; int:        res, MAX &#x3D; 0, (1 &lt;&lt; 31) - 1        sign &#x3D; -1 if x &lt; 0 else 1        x &#x3D; abs(x)        while x &amp;g">
 <meta property="article:published_time" content="2020-05-31T03:52:32.000Z">
-<meta property="article:modified_time" content="2020-05-31T03:53:13.408Z">
+<meta property="article:modified_time" content="2020-06-11T01:13:27.183Z">
 <meta property="article:author" content="Chang Liu">
 <meta property="article:tag" content="LeetCode">
+<meta property="article:tag" content="Integer">
+<meta property="article:tag" content="String">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://changliu.us/2020/05/30/7-Reverse-Integer/">
@@ -144,7 +146,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">11</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">30</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -238,10 +240,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-05-30 23:52:32 / Modified: 23:53:13" itemprop="dateCreated datePublished" datetime="2020-05-30T23:52:32-04:00">2020-05-30</time>
+              <time title="Created: 2020-05-30 23:52:32" itemprop="dateCreated datePublished" datetime="2020-05-30T23:52:32-04:00">2020-05-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-10 21:13:27" itemprop="dateModified" datetime="2020-06-10T21:13:27-04:00">2020-06-10</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -297,6 +305,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (x) &#123;</span><br><span class="line">            res = res * <span class="number">10</span> + x % <span class="number">10</span>;</span><br><span class="line">            x /= <span class="number">10</span>;</span><br><span class="line">            <span class="keyword">if</span> (res &lt; INT_MIN || res &gt; INT_MAX) <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// 只要invalid就返回</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>O(n) time O(n) space</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (x == INT_MIN || x == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> sign = x &lt; <span class="number">0</span> ? <span class="number">-1</span> : <span class="number">1</span>;</span><br><span class="line">        x = <span class="built_in">abs</span>(x);</span><br><span class="line">        <span class="built_in">string</span> s = to_string(x);</span><br><span class="line">        <span class="keyword">while</span> (!s.empty() &amp;&amp; s.back() == <span class="string">'0'</span>) s.pop_back();</span><br><span class="line">        <span class="keyword">long</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> rit = s.rbegin(); rit != s.rend(); ++rit) &#123;</span><br><span class="line">            res = res * <span class="number">10</span> + *rit - <span class="string">'0'</span>;</span><br><span class="line">            <span class="keyword">if</span> (res &gt; INT_MAX) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sign * res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -307,6 +316,8 @@
           
           <div class="post-tags">
               <a href="/tags/LeetCode/" rel="tag"><i class="fa fa-tag"></i> LeetCode</a>
+              <a href="/tags/Integer/" rel="tag"><i class="fa fa-tag"></i> Integer</a>
+              <a href="/tags/String/" rel="tag"><i class="fa fa-tag"></i> String</a>
           </div>
 
         
@@ -430,7 +441,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

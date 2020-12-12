@@ -2634,6 +2634,29 @@
       </tags>
   </entry>
   <entry>
+    <title>1674. Minimum Moves to Make Array Complementary</title>
+    <url>/2020/12/12/1674-Minimum-Moves-to-Make-Array-Complementary/</url>
+    <content><![CDATA[<p>O(n+limit) time O(limit) space<br>这道题首先要仔细观察limit的取值范围，发现跟n是一样的，说明limit可能会影响复杂度，同时还要注意nums每个数都不超过limit，所以可以先从暴力解下手，对于每一个pair，sum变成[2, limit*2]之间任何一个数的最小步数是定值：</p>
+<ul>
+<li>[2, min(a, b)]是2个数都要减小</li>
+<li>[min(a, b) + 1, a + b - 1]是较大的1个数要减小</li>
+<li>[a + b, a + b]是两个数都不用动</li>
+<li>[a + b + 1, max(a, b) + limit]是较小的1个数要变大</li>
+<li>[max(a, b) + limit + 1, limit * 2]是2个数都要变大</li>
+</ul>
+<p>暴力解需要对每一个pair都计算变成每个可能值的变化步数，复杂度过高，通过观察可以发现从2到limit*2一共只有5种可能且变化非常规律分成了5段，对应每一段的变化数是一样的，我们要做的就是把所有pair的不同变化通过某种方式累计起来，这个时候可以想到扫描线，但是单纯的扫描实际变化步数非常不方便，一个trick是利用presum来统计相邻两段区间变化步数的delta，这样就不需要维护完整的实际变化步数，可以很方便的累计到一个数组里，然后利用扫描线即可快速得到完整的累计实际变化步数</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minMoves</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> limit)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">f</span><span class="params">(limit * <span class="number">2</span> + <span class="number">2</span>)</span></span>;</span><br><span class="line">        <span class="keyword">int</span> n = <span class="built_in">size</span>(nums);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i * <span class="number">2</span> &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">int</span> a = nums[i], b = nums[n - <span class="number">1</span> - i];</span><br><span class="line">            f[<span class="number">2</span>] += <span class="number">2</span>;</span><br><span class="line">            --f[<span class="built_in">min</span>(a, b) + <span class="number">1</span>];</span><br><span class="line">            --f[a + b];</span><br><span class="line">            ++f[a + b + <span class="number">1</span>];</span><br><span class="line">            ++f[<span class="built_in">max</span>(a, b) + limit + <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res = n, cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= limit * <span class="number">2</span>; ++i) &#123;</span><br><span class="line">            res = <span class="built_in">min</span>(res, cnt += f[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>Prefix sum</tag>
+        <tag>Sweep line</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Categories</title>
     <url>/categories/index.html</url>
     <content><![CDATA[]]></content>

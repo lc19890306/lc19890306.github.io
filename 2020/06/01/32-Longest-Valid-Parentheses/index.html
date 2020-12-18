@@ -280,14 +280,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.5k</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
+              <span>2 mins.</span>
             </span>
 
         </div>
@@ -300,11 +300,10 @@
 
       
         <p>stack O(n) time O(n) space<br>所有匹配的括号都出栈了，栈里剩下的都是匹配不上的，所以两个匹配不上的括号之间的就是匹配上的括号串，统计最长的可以匹配上的括号串的长度即可</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestValidParentheses</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v&#123;<span class="number">-1</span>&#125;; <span class="comment">// 开始加入-1方便后面计算，比如"()()())"</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == <span class="string">'('</span>) &#123; <span class="comment">// 如果是"("，直接把下标入栈</span></span><br><span class="line">                v.push_back(i);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (v.back() != <span class="number">-1</span> &amp;&amp; s[v.back()] == <span class="string">'('</span>) &#123; <span class="comment">// 如果是")"，并且栈不为『空』或者栈顶是"("，证明有正确的匹配，将栈顶的"("的下标出栈</span></span><br><span class="line">                    v.pop_back();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123; <span class="comment">// 否则证明是一个孤立无法匹配的")"，将下标入栈</span></span><br><span class="line">                    v.push_back(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        v.push_back(n); <span class="comment">// 最后入栈一个结尾长度下标，方便计算，比如")()()"</span></span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; v.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">            res = <span class="built_in">max</span>(res, v[i] - v[i - <span class="number">1</span>] - <span class="number">1</span>); <span class="comment">// 只需要检查前后两个不匹配的括号之前的距离便可以找到最长的合法匹配的括号的长度</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestValidParentheses</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v&#123;<span class="number">-1</span>&#125;; <span class="comment">// 开始加入-1方便后面计算，比如&quot;()()())&quot;</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == <span class="string">&#x27;(&#x27;</span>) &#123; <span class="comment">// 如果是&quot;(&quot;，直接把下标入栈</span></span><br><span class="line">                v.push_back(i);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (v.back() != <span class="number">-1</span> &amp;&amp; s[v.back()] == <span class="string">&#x27;(&#x27;</span>) &#123; <span class="comment">// 如果是&quot;)&quot;，并且栈不为『空』或者栈顶是&quot;(&quot;，证明有正确的匹配，将栈顶的&quot;(&quot;的下标出栈</span></span><br><span class="line">                    v.pop_back();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123; <span class="comment">// 否则证明是一个孤立无法匹配的&quot;)&quot;，将下标入栈</span></span><br><span class="line">                    v.push_back(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        v.push_back(n); <span class="comment">// 最后入栈一个结尾长度下标，方便计算，比如&quot;)()()&quot;</span></span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; v.size(); ++i) &#123;</span><br><span class="line">            res = max(res, v[i] - v[i - <span class="number">1</span>] - <span class="number">1</span>); <span class="comment">// 只需要检查前后两个不匹配的括号之前的距离便可以找到最长的合法匹配的括号的长度</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>进一步优化，不需要最后再扫一遍，每次找到一个合法匹配就可以直接更新res</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestValidParentheses</span><span class="params">(self, s: str)</span> -&gt; int:</span></span><br><span class="line">        stk, res = [<span class="number">-1</span>], <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i, c <span class="keyword">in</span> enumerate(s):</span><br><span class="line">            <span class="keyword">if</span> c == <span class="string">'('</span>:</span><br><span class="line">                stk.append(i)</span><br><span class="line">            <span class="keyword">elif</span> stk[<span class="number">-1</span>] &gt;= <span class="number">0</span> <span class="keyword">and</span> s[stk[<span class="number">-1</span>]] == <span class="string">'('</span>:</span><br><span class="line">                stk.pop()</span><br><span class="line">                res = max(res, i - stk[<span class="number">-1</span>])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                stk.append(i)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestValidParentheses</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.length(), res = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; stk&#123;&#123;<span class="number">-1</span>&#125;&#125;; <span class="comment">// 开始加入-1方便后面计算，比如"()()())"</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == <span class="string">'('</span>) &#123; <span class="comment">// 如果是"("，直接把下标入栈</span></span><br><span class="line">                stk.push(i);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stk.top() != <span class="number">-1</span> &amp;&amp; s[stk.top()] == <span class="string">'('</span>) &#123; <span class="comment">// 如果是")"，并且栈不为『空』或者栈顶是"("，证明有正确的匹配，将栈顶的"("的下标出栈</span></span><br><span class="line">                stk.pop(); <span class="comment">// 一定要先出栈再更新res</span></span><br><span class="line">                res = <span class="built_in">max</span>(res, i - stk.top()); <span class="comment">// 当前是一个合法的匹配，更新res</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">// 否则证明是一个孤立无法匹配的")"，将下标入栈</span></span><br><span class="line">                stk.push(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestValidParentheses</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; int:</span></span><br><span class="line">        stk, res = [-<span class="number">1</span>], <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i, c <span class="keyword">in</span> <span class="built_in">enumerate</span>(s):</span><br><span class="line">            <span class="keyword">if</span> c == <span class="string">&#x27;(&#x27;</span>:</span><br><span class="line">                stk.append(i)</span><br><span class="line">            <span class="keyword">elif</span> stk[-<span class="number">1</span>] &gt;= <span class="number">0</span> <span class="keyword">and</span> s[stk[-<span class="number">1</span>]] == <span class="string">&#x27;(&#x27;</span>:</span><br><span class="line">                stk.pop()</span><br><span class="line">                res = <span class="built_in">max</span>(res, i - stk[-<span class="number">1</span>])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                stk.append(i)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestValidParentheses</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.length(), res = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; stk&#123;&#123;<span class="number">-1</span>&#125;&#125;; <span class="comment">// 开始加入-1方便后面计算，比如&quot;()()())&quot;</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == <span class="string">&#x27;(&#x27;</span>) &#123; <span class="comment">// 如果是&quot;(&quot;，直接把下标入栈</span></span><br><span class="line">                stk.push(i);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stk.top() != <span class="number">-1</span> &amp;&amp; s[stk.top()] == <span class="string">&#x27;(&#x27;</span>) &#123; <span class="comment">// 如果是&quot;)&quot;，并且栈不为『空』或者栈顶是&quot;(&quot;，证明有正确的匹配，将栈顶的&quot;(&quot;的下标出栈</span></span><br><span class="line">                stk.pop(); <span class="comment">// 一定要先出栈再更新res</span></span><br><span class="line">                res = max(res, i - stk.top()); <span class="comment">// 当前是一个合法的匹配，更新res</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">// 否则证明是一个孤立无法匹配的&quot;)&quot;，将下标入栈</span></span><br><span class="line">                stk.push(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -345,23 +344,23 @@
           
       <div class="tabs tabs-comment">
         <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-disqus">Comments</a></li>
             <li class="tab"><a href="#comment-livere">评论</a></li>
+            <li class="tab"><a href="#comment-disqus">Comments</a></li>
         </ul>
         <div class="tab-content">
+            <div class="tab-pane livere" id="comment-livere">
+              
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
+  </div>
+  
+            </div>
             <div class="tab-pane disqus" id="comment-disqus">
               
   <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
-  </div>
-  
-            </div>
-            <div class="tab-pane livere" id="comment-livere">
-              
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
   </div>
   
             </div>
@@ -505,13 +504,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">243k</span>
+    <span title="Symbols count total">250k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">3:41</span>
+    <span title="Reading time total">3:48</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
@@ -643,6 +642,24 @@ if (document.querySelectorAll('pre.mermaid').length) {
       });
   </script>
 
+  
+    
+      <script>
+        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+          window.livereOptions = {
+            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+          };
+          (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+            if (typeof LivereTower === 'function') { return; }
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+            e.parentNode.insertBefore(j, e);
+          })(document, 'script');
+        });
+      </script>
+
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -673,24 +690,6 @@ if (document.querySelectorAll('pre.mermaid').length) {
     }
   });
 </script>
-
-  
-    
-      <script>
-        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
-          window.livereOptions = {
-            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
-          };
-          (function(d, s) {
-            var j, e = d.getElementsByTagName(s)[0];
-            if (typeof LivereTower === 'function') { return; }
-            j = d.createElement(s);
-            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-            j.async = true;
-            e.parentNode.insertBefore(j, e);
-          })(document, 'script');
-        });
-      </script>
 
 </body>
 </html>

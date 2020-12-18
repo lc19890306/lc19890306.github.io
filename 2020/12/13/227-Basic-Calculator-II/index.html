@@ -276,7 +276,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.2k</span>
+              <span>1.3k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -296,9 +296,8 @@
 
       
         <p>O(n) time<br>因为没有括号，所以不需要递归<br>整体思路是用加减把算式分隔开，把连续的乘除集中处理，op表示前一步运算，c表示当前处理的运算，每次不管c是加减乘除哪种运算都用local来跟num进行op的运算并把局部结果保存在local里，如果c是乘除则local继续处理运算（连续的乘除运算），如果c是加减则可以进行分割，把当前的局部结果累加到global里</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">calculate</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> global = <span class="number">0</span>, local = <span class="number">0</span>, num = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">char</span> op = <span class="string">'+'</span>;</span><br><span class="line">        s += <span class="string">'+'</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : s) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">isdigit</span>(c)) &#123;</span><br><span class="line">                num = num * <span class="number">10</span> + c - <span class="string">'0'</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (c != <span class="string">' '</span>) &#123;</span><br><span class="line">                <span class="keyword">switch</span> (op) &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'+'</span>: local += num; <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'-'</span>: local -= num; <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'*'</span>: local *= num; <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'/'</span>: local /= num; <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (c == <span class="string">'+'</span> || c == <span class="string">'-'</span>) &#123;</span><br><span class="line">                    global += local;</span><br><span class="line">                    local = <span class="number">0</span>; <span class="comment">// local归零并不会影响后边的计算，因为当前的c是加减，所以下一步运算一定是0+/-num并得到一个新的local，如果c是乘除则不修改local，因为下一步运算是乘除，local被用了要清零</span></span><br><span class="line">                &#125;</span><br><span class="line">                op = c;</span><br><span class="line">                num = <span class="number">0</span>; <span class="comment">// num被用了要清零</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> global;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">calculate</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, opnd = <span class="number">0</span>;</span><br><span class="line">        <span class="function"><span class="built_in">istringstream</span> <span class="title">input</span><span class="params">(<span class="string">'+'</span> + s + <span class="string">'+'</span>)</span></span>; <span class="comment">// 开头结尾都要加+来触发输入和累加更新res</span></span><br><span class="line">        <span class="keyword">char</span> op;</span><br><span class="line">        <span class="keyword">while</span> (input &gt;&gt; op) &#123;</span><br><span class="line">            <span class="keyword">if</span> (op == <span class="string">'+'</span> || op == <span class="string">'-'</span>) &#123;</span><br><span class="line">                res += opnd;</span><br><span class="line">                <span class="keyword">if</span> (input &gt;&gt; opnd) &#123;</span><br><span class="line">                    opnd *= (<span class="number">44</span> - op); <span class="comment">// +的ASCII码是43，-的ASCII码是45</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">int</span> opnd2;</span><br><span class="line">                input &gt;&gt; opnd2;</span><br><span class="line">                <span class="keyword">if</span> (op == <span class="string">'*'</span>) &#123;</span><br><span class="line">                    opnd *= opnd2;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    opnd /= opnd2;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">calculate</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> global = <span class="number">0</span>, local = <span class="number">0</span>, num = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">char</span> op = <span class="string">&#x27;+&#x27;</span>;</span><br><span class="line">        s += <span class="string">&#x27;+&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : s) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">isdigit</span>(c)) &#123;</span><br><span class="line">                num = num * <span class="number">10</span> + c - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (c != <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                <span class="keyword">switch</span> (op) &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">&#x27;+&#x27;</span>: local += num; <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>: local -= num; <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">&#x27;*&#x27;</span>: local *= num; <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">&#x27;/&#x27;</span>: local /= num; <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (c == <span class="string">&#x27;+&#x27;</span> || c == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                    global += local;</span><br><span class="line">                    local = <span class="number">0</span>; <span class="comment">// local归零并不会影响后边的计算，因为当前的c是加减，所以下一步运算一定是0+/-num并得到一个新的local，如果c是乘除则不修改local，因为下一步运算是乘除，local被用了要清零</span></span><br><span class="line">                &#125;</span><br><span class="line">                op = c;</span><br><span class="line">                num = <span class="number">0</span>; <span class="comment">// num被用了要清零</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> global;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">calculate</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, opnd = <span class="number">0</span>;</span><br><span class="line">        <span class="function"><span class="built_in">istringstream</span> <span class="title">input</span><span class="params">(<span class="string">&#x27;+&#x27;</span> + s + <span class="string">&#x27;+&#x27;</span>)</span></span>; <span class="comment">// 开头结尾都要加+来触发输入和累加更新res</span></span><br><span class="line">        <span class="keyword">char</span> op;</span><br><span class="line">        <span class="keyword">while</span> (input &gt;&gt; op) &#123;</span><br><span class="line">            <span class="keyword">if</span> (op == <span class="string">&#x27;+&#x27;</span> || op == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                res += opnd;</span><br><span class="line">                <span class="keyword">if</span> (input &gt;&gt; opnd) &#123;</span><br><span class="line">                    opnd *= (<span class="number">44</span> - op); <span class="comment">// +的ASCII码是43，-的ASCII码是45</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">int</span> opnd2;</span><br><span class="line">                input &gt;&gt; opnd2;</span><br><span class="line">                <span class="keyword">if</span> (op == <span class="string">&#x27;*&#x27;</span>) &#123;</span><br><span class="line">                    opnd *= opnd2;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    opnd /= opnd2;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -341,23 +340,23 @@
           
       <div class="tabs tabs-comment">
         <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-disqus">Comments</a></li>
             <li class="tab"><a href="#comment-livere">评论</a></li>
+            <li class="tab"><a href="#comment-disqus">Comments</a></li>
         </ul>
         <div class="tab-content">
+            <div class="tab-pane livere" id="comment-livere">
+              
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
+  </div>
+  
+            </div>
             <div class="tab-pane disqus" id="comment-disqus">
               
   <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
-  </div>
-  
-            </div>
-            <div class="tab-pane livere" id="comment-livere">
-              
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
   </div>
   
             </div>
@@ -501,13 +500,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">243k</span>
+    <span title="Symbols count total">250k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">3:41</span>
+    <span title="Reading time total">3:48</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
@@ -639,6 +638,24 @@ if (document.querySelectorAll('pre.mermaid').length) {
       });
   </script>
 
+  
+    
+      <script>
+        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+          window.livereOptions = {
+            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+          };
+          (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+            if (typeof LivereTower === 'function') { return; }
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+            e.parentNode.insertBefore(j, e);
+          })(document, 'script');
+        });
+      </script>
+
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -669,24 +686,6 @@ if (document.querySelectorAll('pre.mermaid').length) {
     }
   });
 </script>
-
-  
-    
-      <script>
-        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
-          window.livereOptions = {
-            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
-          };
-          (function(d, s) {
-            var j, e = d.getElementsByTagName(s)[0];
-            if (typeof LivereTower === 'function') { return; }
-            j = d.createElement(s);
-            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-            j.async = true;
-            e.parentNode.insertBefore(j, e);
-          })(document, 'script');
-        });
-      </script>
 
 </body>
 </html>

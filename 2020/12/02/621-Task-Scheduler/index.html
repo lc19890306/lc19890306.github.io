@@ -282,7 +282,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>992</span>
+              <span>1k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -301,7 +301,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>O(t) time t是tasks的个数<a href="https://leetcode.com/articles/task-scheduler/#approach-3-calculating-idle-slots-accepted" target="_blank" rel="noopener">题解</a><br>先统计字符频数，然后从大到小排序，初始idle的个数是(最大频数 - 1) * n，因为只统计(最大频数 - 1)范围内的区间，比如输入是AAABBB2，则初始化为A__A__，而不是A__A__A__，然后要做的就是按照频数从大到小往idle的slot里面放字符，这里要放在区间范围内，所以要用min(m[i], mx)，即AB_AB_，否则变成AB_AB_B就不对了，所有频数大于0的字符都放完以后，如果还有idle的slot说明剩下的字符只能放在后面了，即AB_AB_AB，不能再往idle的slot里面放了，否则说明不需要idle的slot分隔也足以让字符按照要求间隔的放，比如输入AAABBBCCC2，输出应为ABCABCABC<br>假设task是AAABBCCDD，n = 2</p>
+        <p>O(t) time t是tasks的个数<a target="_blank" rel="noopener" href="https://leetcode.com/articles/task-scheduler/#approach-3-calculating-idle-slots-accepted">题解</a><br>先统计字符频数，然后从大到小排序，初始idle的个数是(最大频数 - 1) * n，因为只统计(最大频数 - 1)范围内的区间，比如输入是AAABBB2，则初始化为A__A__，而不是A__A__A__，然后要做的就是按照频数从大到小往idle的slot里面放字符，这里要放在区间范围内，所以要用min(m[i], mx)，即AB_AB_，否则变成AB_AB_B就不对了，所有频数大于0的字符都放完以后，如果还有idle的slot说明剩下的字符只能放在后面了，即AB_AB_AB，不能再往idle的slot里面放了，否则说明不需要idle的slot分隔也足以让字符按照要求间隔的放，比如输入AAABBBCCC2，输出应为ABCABCABC<br>假设task是AAABBCCDD，n = 2</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A12</span><br><span class="line">A12</span><br><span class="line">A</span><br></pre></td></tr></table></figure>
 <p>变成</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ABCD</span><br><span class="line">ABCD</span><br><span class="line">A</span><br></pre></td></tr></table></figure>
@@ -310,8 +310,7 @@
 <p>变成</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AB2</span><br><span class="line">AB2</span><br><span class="line">AB</span><br></pre></td></tr></table></figure>
 <p>还剩2个idle slot，结果就是taks.size() + 2 = 8</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">leastInterval</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; tasks, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m[<span class="number">26</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : tasks) &#123;</span><br><span class="line">            ++m[c - <span class="string">'A'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        sort(m, m + <span class="number">26</span>, greater&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">        <span class="keyword">int</span> mx = m[<span class="number">0</span>] - <span class="number">1</span>, idle_slots = mx * n;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">26</span> &amp;&amp; m[i] &gt; <span class="number">0</span> &amp;&amp; idle_slots &gt;= <span class="number">0</span>; ++i) &#123;</span><br><span class="line">            idle_slots -= <span class="built_in">min</span>(m[i], mx); <span class="comment">// idle_slots是有可能放不开的，也就是最后变成负数</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tasks.<span class="built_in">size</span>() + <span class="built_in">max</span>(idle_slots, <span class="number">0</span>); <span class="comment">// 这里要取max是因为idle_slots有可能因为放不开而『过饱和』，也就是变成负数，最后要把这些『负数』加回来，比如AAABBBCCCDDD2，最后idle_slots因为D放不进去变成-2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">leastInterval</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; tasks, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m[<span class="number">26</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : tasks) &#123;</span><br><span class="line">            ++m[c - <span class="string">&#x27;A&#x27;</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        sort(m, m + <span class="number">26</span>, greater&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">        <span class="keyword">int</span> mx = m[<span class="number">0</span>] - <span class="number">1</span>, idle_slots = mx * n;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">26</span> &amp;&amp; m[i] &gt; <span class="number">0</span> &amp;&amp; idle_slots &gt;= <span class="number">0</span>; ++i) &#123;</span><br><span class="line">            idle_slots -= min(m[i], mx); <span class="comment">// idle_slots是有可能放不开的，也就是最后变成负数</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tasks.size() + max(idle_slots, <span class="number">0</span>); <span class="comment">// 这里要取max是因为idle_slots有可能因为放不开而『过饱和』，也就是变成负数，最后要把这些『负数』加回来，比如AAABBBCCCDDD2，最后idle_slots因为D放不进去变成-2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -354,23 +353,23 @@
           
       <div class="tabs tabs-comment">
         <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-disqus">Comments</a></li>
             <li class="tab"><a href="#comment-livere">评论</a></li>
+            <li class="tab"><a href="#comment-disqus">Comments</a></li>
         </ul>
         <div class="tab-content">
+            <div class="tab-pane livere" id="comment-livere">
+              
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
+  </div>
+  
+            </div>
             <div class="tab-pane disqus" id="comment-disqus">
               
   <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
-  </div>
-  
-            </div>
-            <div class="tab-pane livere" id="comment-livere">
-              
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
   </div>
   
             </div>
@@ -514,13 +513,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">243k</span>
+    <span title="Symbols count total">250k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">3:41</span>
+    <span title="Reading time total">3:48</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
@@ -652,6 +651,24 @@ if (document.querySelectorAll('pre.mermaid').length) {
       });
   </script>
 
+  
+    
+      <script>
+        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+          window.livereOptions = {
+            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+          };
+          (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+            if (typeof LivereTower === 'function') { return; }
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+            e.parentNode.insertBefore(j, e);
+          })(document, 'script');
+        });
+      </script>
+
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -682,24 +699,6 @@ if (document.querySelectorAll('pre.mermaid').length) {
     }
   });
 </script>
-
-  
-    
-      <script>
-        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
-          window.livereOptions = {
-            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
-          };
-          (function(d, s) {
-            var j, e = d.getElementsByTagName(s)[0];
-            if (typeof LivereTower === 'function') { return; }
-            j = d.createElement(s);
-            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-            j.async = true;
-            e.parentNode.insertBefore(j, e);
-          })(document, 'script');
-        });
-      </script>
 
 </body>
 </html>

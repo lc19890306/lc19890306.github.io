@@ -293,11 +293,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>跟<a href="https://leetcode.com/problems/read-n-characters-given-read4/" target="_blank" rel="noopener">157. Read N Characters Given Read4</a>的区别是前一次read过的剩余字符下次read的时候直接写进buf</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The read4 API is defined in the parent class Reader4.</span></span><br><span class="line"><span class="comment"> *     int read4(char *buf4);</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * @param buf Destination buffer</span></span><br><span class="line"><span class="comment">     * @param n   Number of characters to read</span></span><br><span class="line"><span class="comment">     * @return    The number of actual characters read</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">char</span> *buf, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (b != e &amp;&amp; cnt &lt; n) &#123;</span><br><span class="line">            buf[cnt++] = buf4[b++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnt == n) <span class="keyword">return</span> cnt;</span><br><span class="line">        b = <span class="number">0</span>;</span><br><span class="line">        e = read4(buf4);</span><br><span class="line">        <span class="keyword">if</span> (e == <span class="number">0</span>) <span class="keyword">return</span> cnt;</span><br><span class="line">        <span class="keyword">return</span> cnt + <span class="built_in">read</span>(buf + cnt, n - cnt);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> buf4[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">0</span>, e = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Forward declaration of the read4 API.</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read4</span><span class="params">(<span class="keyword">char</span> *buf)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * @param buf Destination buffer</span></span><br><span class="line"><span class="comment">     * @param n   Number of characters to read</span></span><br><span class="line"><span class="comment">     * @return    The number of actual characters read</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">char</span> *buf, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; e &amp;&amp; cnt &lt; n) &#123; <span class="comment">// 在全局buffer的边界之内尽可能多的读字符</span></span><br><span class="line">            buf[cnt++] = t[i++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (i == e) i = e = <span class="number">0</span>; <span class="comment">// 如果全局buffer里到边界的所有字符都被读走，则重置下标和边界</span></span><br><span class="line">        <span class="keyword">if</span> (cnt == n) <span class="keyword">return</span> cnt; <span class="comment">// 如果已经读够了需要的字符，则返回</span></span><br><span class="line">        e = read4(t);</span><br><span class="line">        <span class="keyword">if</span> (e == <span class="number">0</span>) <span class="keyword">return</span> cnt; <span class="comment">// 如果还需要继续读字符但是读出的字符数为0</span></span><br><span class="line">        <span class="keyword">return</span> cnt + <span class="built_in">read</span>(buf + cnt, n - cnt); <span class="comment">// 如果还需要继续读字符，递归</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, e = <span class="number">0</span>; <span class="comment">// 维护全局buffer的下标和右边界（不一定为4）</span></span><br><span class="line">    <span class="keyword">char</span> t[<span class="number">4</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+        <p>跟<a target="_blank" rel="noopener" href="https://leetcode.com/problems/read-n-characters-given-read4/">157. Read N Characters Given Read4</a>的区别是前一次read过的剩余字符下次read的时候直接写进buf</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The read4 API is defined in the parent class Reader4.</span></span><br><span class="line"><span class="comment"> *     int read4(char *buf4);</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * @param buf Destination buffer</span></span><br><span class="line"><span class="comment">     * @param n   Number of characters to read</span></span><br><span class="line"><span class="comment">     * @return    The number of actual characters read</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">char</span> *buf, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (b != e &amp;&amp; cnt &lt; n) &#123;</span><br><span class="line">            buf[cnt++] = buf4[b++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnt == n) <span class="keyword">return</span> cnt;</span><br><span class="line">        b = <span class="number">0</span>;</span><br><span class="line">        e = read4(buf4);</span><br><span class="line">        <span class="keyword">if</span> (e == <span class="number">0</span>) <span class="keyword">return</span> cnt;</span><br><span class="line">        <span class="keyword">return</span> cnt + read(buf + cnt, n - cnt);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> buf4[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">0</span>, e = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Forward declaration of the read4 API.</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read4</span><span class="params">(<span class="keyword">char</span> *buf)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * @param buf Destination buffer</span></span><br><span class="line"><span class="comment">     * @param n   Number of characters to read</span></span><br><span class="line"><span class="comment">     * @return    The number of actual characters read</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">char</span> *buf, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; e &amp;&amp; cnt &lt; n) &#123; <span class="comment">// 在全局buffer的边界之内尽可能多的读字符</span></span><br><span class="line">            buf[cnt++] = t[i++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (i == e) i = e = <span class="number">0</span>; <span class="comment">// 如果全局buffer里到边界的所有字符都被读走，则重置下标和边界</span></span><br><span class="line">        <span class="keyword">if</span> (cnt == n) <span class="keyword">return</span> cnt; <span class="comment">// 如果已经读够了需要的字符，则返回</span></span><br><span class="line">        e = read4(t);</span><br><span class="line">        <span class="keyword">if</span> (e == <span class="number">0</span>) <span class="keyword">return</span> cnt; <span class="comment">// 如果还需要继续读字符但是读出的字符数为0</span></span><br><span class="line">        <span class="keyword">return</span> cnt + read(buf + cnt, n - cnt); <span class="comment">// 如果还需要继续读字符，递归</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, e = <span class="number">0</span>; <span class="comment">// 维护全局buffer的下标和右边界（不一定为4）</span></span><br><span class="line">    <span class="keyword">char</span> t[<span class="number">4</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -338,23 +336,23 @@
           
       <div class="tabs tabs-comment">
         <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-disqus">Comments</a></li>
             <li class="tab"><a href="#comment-livere">评论</a></li>
+            <li class="tab"><a href="#comment-disqus">Comments</a></li>
         </ul>
         <div class="tab-content">
+            <div class="tab-pane livere" id="comment-livere">
+              
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
+  </div>
+  
+            </div>
             <div class="tab-pane disqus" id="comment-disqus">
               
   <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
-  </div>
-  
-            </div>
-            <div class="tab-pane livere" id="comment-livere">
-              
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
   </div>
   
             </div>
@@ -498,13 +496,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">243k</span>
+    <span title="Symbols count total">250k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">3:41</span>
+    <span title="Reading time total">3:48</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
@@ -636,6 +634,24 @@ if (document.querySelectorAll('pre.mermaid').length) {
       });
   </script>
 
+  
+    
+      <script>
+        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+          window.livereOptions = {
+            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+          };
+          (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+            if (typeof LivereTower === 'function') { return; }
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+            e.parentNode.insertBefore(j, e);
+          })(document, 'script');
+        });
+      </script>
+
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -666,24 +682,6 @@ if (document.querySelectorAll('pre.mermaid').length) {
     }
   });
 </script>
-
-  
-    
-      <script>
-        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
-          window.livereOptions = {
-            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
-          };
-          (function(d, s) {
-            var j, e = d.getElementsByTagName(s)[0];
-            if (typeof LivereTower === 'function') { return; }
-            j = d.createElement(s);
-            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-            j.async = true;
-            e.parentNode.insertBefore(j, e);
-          })(document, 'script');
-        });
-      </script>
 
 </body>
 </html>

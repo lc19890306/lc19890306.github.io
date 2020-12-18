@@ -303,8 +303,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Widget</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Widget(Widget&amp;&amp; rhs)</span><br><span class="line">    : name(<span class="built_in">std</span>::<span class="built_in">move</span>(rhs.name))</span><br><span class="line">    , p(<span class="built_in">std</span>::<span class="built_in">move</span>(rhs.p)) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> name;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;SomeDataStructure&gt; p;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Widget</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setName</span><span class="params">(T&amp;&amp; newName)</span> </span>&#123;</span><br><span class="line">        name = <span class="built_in">std</span>::forward&lt;T&gt;(newName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Widget <span class="title">makeWidget</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Widget w;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">std</span>::<span class="built_in">move</span>(w); <span class="comment">// DO NOT DO THIS!</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget w1;</span><br><span class="line">Widget w2 = <span class="built_in">std</span>::<span class="built_in">move</span>(w1); <span class="comment">// w1 is "empty"</span></span><br><span class="line">Widget &amp;&amp;w3 = <span class="built_in">std</span>::<span class="built_in">move</span>(w2); <span class="comment">// w3 is an rvalue reference and an lvalue, no type deduction</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(Widget &amp;&amp;w)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// modify w</span></span><br><span class="line">&#125;</span><br><span class="line">f(w3); <span class="comment">// compilation error! w3 is an lvalue</span></span><br><span class="line">f(<span class="built_in">std</span>::<span class="built_in">move</span>(w3)); <span class="comment">// Okay! modifying w inside f changes w3</span></span><br></pre></td></tr></table></figure>
-
+        <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Widget</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Widget(Widget&amp;&amp; rhs)</span><br><span class="line">    : name(<span class="built_in">std</span>::move(rhs.name))</span><br><span class="line">    , p(<span class="built_in">std</span>::move(rhs.p)) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> name;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;SomeDataStructure&gt; p;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Widget</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setName</span><span class="params">(T&amp;&amp; newName)</span> </span>&#123;</span><br><span class="line">        name = <span class="built_in">std</span>::forward&lt;T&gt;(newName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Widget <span class="title">makeWidget</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Widget w;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">std</span>::move(w); <span class="comment">// DO NOT DO THIS!</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget w1;</span><br><span class="line">Widget w2 = <span class="built_in">std</span>::move(w1); <span class="comment">// w1 is &quot;empty&quot;</span></span><br><span class="line">Widget &amp;&amp;w3 = <span class="built_in">std</span>::move(w2); <span class="comment">// w3 is an rvalue reference and an lvalue, no type deduction</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(Widget &amp;&amp;w)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// modify w</span></span><br><span class="line">&#125;</span><br><span class="line">f(w3); <span class="comment">// compilation error! w3 is an lvalue</span></span><br><span class="line">f(<span class="built_in">std</span>::move(w3)); <span class="comment">// Okay! modifying w inside f changes w3</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 
 <p>Conclusion:</p>
@@ -357,23 +356,23 @@
           
       <div class="tabs tabs-comment">
         <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-disqus">Comments</a></li>
             <li class="tab"><a href="#comment-livere">评论</a></li>
+            <li class="tab"><a href="#comment-disqus">Comments</a></li>
         </ul>
         <div class="tab-content">
+            <div class="tab-pane livere" id="comment-livere">
+              
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
+  </div>
+  
+            </div>
             <div class="tab-pane disqus" id="comment-disqus">
               
   <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
-  </div>
-  
-            </div>
-            <div class="tab-pane livere" id="comment-livere">
-              
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
   </div>
   
             </div>
@@ -517,13 +516,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">243k</span>
+    <span title="Symbols count total">250k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">3:41</span>
+    <span title="Reading time total">3:48</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
@@ -655,6 +654,24 @@ if (document.querySelectorAll('pre.mermaid').length) {
       });
   </script>
 
+  
+    
+      <script>
+        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+          window.livereOptions = {
+            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+          };
+          (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+            if (typeof LivereTower === 'function') { return; }
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+            e.parentNode.insertBefore(j, e);
+          })(document, 'script');
+        });
+      </script>
+
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -685,24 +702,6 @@ if (document.querySelectorAll('pre.mermaid').length) {
     }
   });
 </script>
-
-  
-    
-      <script>
-        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
-          window.livereOptions = {
-            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
-          };
-          (function(d, s) {
-            var j, e = d.getElementsByTagName(s)[0];
-            if (typeof LivereTower === 'function') { return; }
-            j = d.createElement(s);
-            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-            j.async = true;
-            e.parentNode.insertBefore(j, e);
-          })(document, 'script');
-        });
-      </script>
 
 </body>
 </html>

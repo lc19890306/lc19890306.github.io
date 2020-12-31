@@ -3199,6 +3199,33 @@ You should see a file <strong>foo.fish</strong> under <strong>~/.config/fish/fun
       </tags>
   </entry>
   <entry>
+    <title>920. Number of Music Playlists</title>
+    <url>/2020/12/31/920-Number-of-Music-Playlists/</url>
+    <content><![CDATA[<p>dp O(NL) time O(NL) space<br>这道题的建模应该先从如何生成一个播放列表入手，因为有K首歌之内不能重复这个限制条件，所以我们一定是要一首歌一首歌往播放列表里添加并且每次都要检查是否跟前K首歌重复，如果重复则选择另外一首歌，所以我们只考虑不重复的合法情况：</p>
+<ol>
+<li>跟当前已生成的播放列表完全不重复，这样的歌就是所有还未选择过的歌</li>
+<li>跟前K首歌不重复但是跟K首歌之前的歌有重复，这样的歌就是已经被选择过的播放列表中的歌但是并不在最近的K首歌里</li>
+</ol>
+<p>假设dp[l][n]表示对于播放表的前l首歌，去除重复的歌曲后还剩下n首歌的方案数。（即使用n首歌来生成播放表的前l首歌）</p>
+<p>那么需要return的答案便为：dp[L][N] (因为每首歌必须至少出现一次，故这L首歌去除重复后一定有N首歌)</p>
+<p>对于dp[l][n]的求解，需要分类讨论：</p>
+<ol>
+<li><p>播放表的第l首歌跟前面的(l -1)首都不一样，则对于dp[l][n]，我们可以先使用(n-1)首歌排好播放表的前(l -1)首歌，然后从剩下的(N - (n -1))首歌<br>里面再任意取一首歌，放在第l个位置，即：<br>dp[l][n] += dp[l -1][n -1] * (N - (n - 1))</p>
+</li>
+<li><p>播放表的第l首歌跟前面的(l -1)首存在重复的，则对于dp[l][n]，我们可以先使用n首歌排好前面的(l -1)首歌，然后因为保证任意两首相同的歌之间至<br>少有k首不同的歌，故对于dp[l -1][n]里面的方案，最后的k首歌一定不一样，故我们只需要选一首跟最后面的k首歌不一样的歌，放在第l个位置即可，即：<br>dp[l][n] += dp[l -1][n] * (n - k)</p>
+</li>
+</ol>
+<p>此题得解，时间复杂度:O(NL)<br>注意一开始的初始化：dp[0][0] = 1</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numMusicPlaylists</span><span class="params">(<span class="keyword">int</span> N, <span class="keyword">int</span> L, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> M = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&gt; f(L + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;(N + <span class="number">1</span>));</span><br><span class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">1</span>; l &lt;= L; ++l) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">1</span>; n &lt;= N; ++n) &#123;</span><br><span class="line">                f[l][n] = (f[l][n] + f[l - <span class="number">1</span>][n - <span class="number">1</span>] * (N - (n - <span class="number">1</span>))) % M;</span><br><span class="line">                f[l][n] = (f[l][n] + f[l - <span class="number">1</span>][n] * max(<span class="number">0</span>, n - K)) % M;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[L][N];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>Dynamic programming</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>About me</title>
     <url>/about/index.html</url>
     <content><![CDATA[<p>Chang is currently a senior software engineer at <a href="https://www.mathworks.com/">MathWorks</a>. Before joining <a href="https://www.mathworks.com/">MathWorks</a>, he did research in network and communication system verification at <a href="https://vt.edu/">Virginia Tech</a> and got his master degree in computer engineering. He used to study information security and got his bachelor degree at <a href="http://en.nankai.edu.cn/">Nankai University</a> in Tianjin, China.</p>

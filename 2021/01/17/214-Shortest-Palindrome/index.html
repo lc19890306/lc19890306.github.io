@@ -30,7 +30,7 @@
 <meta property="og:description" content="rolling hash O(n) time O(n) space 12345678910111213141516171819202122232425class Solution &amp;#123;public:    string shortestPalindrome(const string &amp;s) &amp;#123;        if (s.empty()) return s;">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-18T02:46:16.000Z">
-<meta property="article:modified_time" content="2021-01-18T02:48:27.044Z">
+<meta property="article:modified_time" content="2021-01-18T15:39:30.701Z">
 <meta property="article:author" content="Chang Liu">
 <meta property="article:tag" content="LeetCode">
 <meta property="article:tag" content="Implementation">
@@ -148,7 +148,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">78</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">79</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -158,7 +158,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">318</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">343</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -242,10 +242,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-01-17 21:46:16 / Modified: 21:48:27" itemprop="dateCreated datePublished" datetime="2021-01-17T21:46:16-05:00">2021-01-17</time>
+              <time title="Created: 2021-01-17 21:46:16" itemprop="dateCreated datePublished" datetime="2021-01-17T21:46:16-05:00">2021-01-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-18 10:39:30" itemprop="dateModified" datetime="2021-01-18T10:39:30-05:00">2021-01-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -276,14 +282,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>3.6k</span>
+              <span>4.2k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>3 mins.</span>
+              <span>4 mins.</span>
             </span>
 
         </div>
@@ -296,6 +302,7 @@
 
       
         <p>rolling hash O(n) time O(n) space</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">shortestPalindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.empty()) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">r</span><span class="params">(rbegin(s), rend(s))</span></span>;</span><br><span class="line">        <span class="keyword">long</span> M = INT_MAX, B = <span class="number">256</span>;</span><br><span class="line">        <span class="keyword">int</span> n = size(s);</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; <span class="title">p</span><span class="params">(n, <span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            p[i] = (p[i - <span class="number">1</span>] * B) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> sh = <span class="number">0</span>, rh = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            sh = (sh * B + s[i]) % M;</span><br><span class="line">            rh = (rh * B + r[i]) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sh == rh &amp;&amp; s.compare(<span class="number">0</span>, n, r, <span class="number">0</span>, n) == <span class="number">0</span>) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            sh = (sh + M - s[n - i] * p[i - <span class="number">1</span>] % M) % M;</span><br><span class="line">            rh = (rh + M - r[i - <span class="number">1</span>] * p[n - i] % M) % M;</span><br><span class="line">            <span class="keyword">if</span> (sh == rh * p[i] % M &amp;&amp; s.compare(<span class="number">0</span>, n - i, r, i, n - i) == <span class="number">0</span>) <span class="keyword">return</span> r.substr(<span class="number">0</span>, i) + s;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">shortestPalindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.empty()) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">r</span><span class="params">(rbegin(s), rend(s))</span></span>;</span><br><span class="line">        <span class="keyword">long</span> M = INT_MAX, B = <span class="number">256</span>;</span><br><span class="line">        <span class="keyword">int</span> n = size(s);</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; <span class="title">p</span><span class="params">(n, <span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            p[i] = (p[i - <span class="number">1</span>] * B) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> sh = <span class="number">0</span>, rh = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            sh = (sh + s[i] * p[i]) % M;</span><br><span class="line">            rh = (rh + r[i] * p[i]) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sh == rh &amp;&amp; s.compare(<span class="number">0</span>, n, r, <span class="number">0</span>, n) == <span class="number">0</span>) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            sh = (sh + M - s[n - i] * p[n - i] % M) % M;</span><br><span class="line">            rh = (rh + M - r[i - <span class="number">1</span>] * p[i - <span class="number">1</span>] % M) % M;</span><br><span class="line">            <span class="keyword">if</span> ((sh * p[i]) % M == rh &amp;&amp; s.compare(<span class="number">0</span>, n - i, r, i, n - i) == <span class="number">0</span>) <span class="keyword">return</span> r.substr(<span class="number">0</span>, i) + s;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">shortestPalindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.empty()) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">r</span><span class="params">(rbegin(s), rend(s))</span></span>;</span><br><span class="line">        <span class="keyword">long</span> M = INT_MAX, B = <span class="number">256</span>;</span><br><span class="line">        <span class="keyword">int</span> n = size(s);</span><br><span class="line">        vector&lt;long&gt; p(n, 1), sh(n), rh(n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            p[i] = (p[i - <span class="number">1</span>] * B) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        sh[<span class="number">0</span>] = s[<span class="number">0</span>];</span><br><span class="line">        rh[<span class="number">0</span>] = r[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            sh[i] = (sh[i - <span class="number">1</span>] + s[i] * p[i]) % M;</span><br><span class="line">            rh[i] = (rh[i - <span class="number">1</span>] + r[i] * p[i]) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sh[n - <span class="number">1</span>] == rh[n - <span class="number">1</span>] &amp;&amp; s.compare(<span class="number">0</span>, n, r, <span class="number">0</span>, n) == <span class="number">0</span>) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">auto</span> a = (sh[n - i - <span class="number">1</span>] * p[i]) % M;</span><br><span class="line">            <span class="keyword">auto</span> b = (rh[n - <span class="number">1</span>] + M - rh[i - <span class="number">1</span>]) % M;</span><br><span class="line">            <span class="keyword">if</span> (a == b &amp;&amp; s.compare(<span class="number">0</span>, n - i, r, i, n - i) == <span class="number">0</span>) <span class="keyword">return</span> r.substr(<span class="number">0</span>, i) + s;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>O(n<sup>2</sup>)递归版<br>KMP可以实现O(n)<br>我们使用双指针来找出字符串s的最长回文前缀的大概范围，指针i和j分别指向s串的开头和末尾，若 s[i] 和 s[j] 相等，则i自增1，j自减1，否则只有j自减1。这样遍历一遍后，最长回文前缀就在范围 [0, i) 中，但不保证这个本身就是最大回文前缀，我们只能确定后面剩余的部分肯定不属于，此时我们提取出剩下的字符，翻转一下加到最前面，而对范围 [0, i) 内的子串再次递归调用本函数，这样，在子函数最终会组成最短的回文串，从而使得整个的回文串就是最短的<br>Each iteration of shortestPalindrome is linear in size of substring and the maximum number of recursive calls can be n/2 times as shown in the Intuition section.<br>Let the time complexity of the algorithm be T(n). Since, at the each step for the worst case, the string can be divide into 2 parts and we require only one part for further computation. Hence, the time complexity for the worst case can be represented as : T(n)=T(n-2)+O(n)T(n)=T(n−2)+O(n). So, T(n) = O(n) + O(n-2) + O(n-4) + … + O(1)T(n)=O(n)+O(n−2)+O(n−4)+…+O(1) which is O(n<sup>2</sup>)</p>
@@ -429,7 +436,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">318</span>
+          <span class="site-state-item-count">343</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -442,7 +449,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-count">79</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -508,13 +515,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">485k</span>
+    <span title="Symbols count total">511k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">7:21</span>
+    <span title="Reading time total">7:44</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

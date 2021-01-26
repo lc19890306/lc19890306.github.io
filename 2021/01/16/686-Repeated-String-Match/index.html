@@ -30,7 +30,7 @@
 <meta property="og:description" content="ad-hoc O(n*(n+m)) m是A的长度 n是B的长度 123456789101112131415class Solution &amp;#123;public:    int repeatedStringMatch(string A, string B) &amp;#123;        string s;        int cnt &#x3D; 0;        while (s.length() &amp;l">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-16T05:01:57.000Z">
-<meta property="article:modified_time" content="2021-01-19T03:00:26.493Z">
+<meta property="article:modified_time" content="2021-01-26T02:13:16.801Z">
 <meta property="article:author" content="Chang Liu">
 <meta property="article:tag" content="LeetCode">
 <meta property="article:tag" content="Rolling hash">
@@ -248,7 +248,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-18 22:00:26" itemprop="dateModified" datetime="2021-01-18T22:00:26-05:00">2021-01-18</time>
+                <time title="Modified: 2021-01-25 21:13:16" itemprop="dateModified" datetime="2021-01-25T21:13:16-05:00">2021-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,7 +280,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.3k</span>
+              <span>1.2k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -302,7 +302,7 @@
         <p>ad-hoc O(n*(n+m)) m是A的长度 n是B的长度</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">repeatedStringMatch</span><span class="params">(<span class="built_in">string</span> A, <span class="built_in">string</span> B)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">string</span> s;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (s.length() &lt; B.length()) &#123;</span><br><span class="line">            ++cnt;</span><br><span class="line">            s += A;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (s.find(B) != <span class="built_in">string</span>::npos) <span class="keyword">return</span> cnt;</span><br><span class="line">        s += A; <span class="comment">// 长度超过B未必一定包含B有可能最后还差A开头的几个字母</span></span><br><span class="line">        ++cnt;</span><br><span class="line">        <span class="keyword">return</span> s.find(B) == <span class="built_in">string</span>::npos ? <span class="number">-1</span> : cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>这道题还有KMP和Rabin-Karp (Rolling Hash)两种做法 O(m+n)但是过于复杂</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">repeatedStringMatch</span><span class="params">(<span class="built_in">string</span> A, <span class="built_in">string</span> B)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">string</span> s;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (s.length() &lt; B.length()) &#123;</span><br><span class="line">            ++cnt;</span><br><span class="line">            s += A;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (strStr(s, B) != <span class="number">-1</span>) <span class="keyword">return</span> cnt;</span><br><span class="line">        s += A; <span class="comment">// 长度超过B未必一定包含B有可能最后还差A开头的几个字母</span></span><br><span class="line">        ++cnt;</span><br><span class="line">        <span class="keyword">return</span> strStr(s, B) == <span class="number">-1</span> ? <span class="number">-1</span> : cnt;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">strStr</span><span class="params">(<span class="built_in">string</span> haystack, <span class="built_in">string</span> needle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> h = haystack.length(), n = needle.length();</span><br><span class="line">        <span class="keyword">long</span> M = INT_MAX, B = <span class="number">256</span>; <span class="comment">// INT_MAX是质数！</span></span><br><span class="line">        <span class="keyword">if</span> (h &lt; n) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">long</span> highest_power = <span class="number">1</span>, hh = <span class="number">0</span>, nh = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            highest_power = (highest_power * B) % M;</span><br><span class="line">            nh = (nh * B + needle[i]) % M;</span><br><span class="line">            hh = (hh * B + haystack[i]) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= h - n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                hh = (hh * B + M - haystack[i - <span class="number">1</span>] * highest_power % M + haystack[i + n - <span class="number">1</span>]) % M; <span class="comment">// 这里highest_power是B的n次方，因为先整体左移再减高位，如果先减高位再整体左移就是n-1次方了</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (hh == nh) &#123;</span><br><span class="line">                <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span> (; j &lt; n; ++j) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (haystack[i + j] != needle[j]) <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (j == n) <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">repeatedStringMatch</span><span class="params">(<span class="built_in">string</span> A, <span class="built_in">string</span> B)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">string</span> s;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (s.length() &lt; B.length()) &#123;</span><br><span class="line">            ++cnt;</span><br><span class="line">            s += A;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (strStr(s, B) != <span class="number">-1</span>) <span class="keyword">return</span> cnt;</span><br><span class="line">        s += A; <span class="comment">// 长度超过B未必一定包含B有可能最后还差A开头的几个字母</span></span><br><span class="line">        ++cnt;</span><br><span class="line">        <span class="keyword">return</span> strStr(s, B) == <span class="number">-1</span> ? <span class="number">-1</span> : cnt;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">strStr</span><span class="params">(<span class="built_in">string</span> haystack, <span class="built_in">string</span> needle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> h = haystack.length(), n = needle.length();</span><br><span class="line">        <span class="keyword">long</span> M = INT_MAX, B = <span class="number">256</span>; <span class="comment">// INT_MAX是质数！</span></span><br><span class="line">        <span class="keyword">if</span> (h &lt; n) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">long</span> highest_power = <span class="number">1</span>, hh = <span class="number">0</span>, nh = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            highest_power = (highest_power * B) % M;</span><br><span class="line">            nh = (nh * B + needle[i]) % M;</span><br><span class="line">            hh = (hh * B + haystack[i]) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= h - n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                hh = (hh * B + M - haystack[i - <span class="number">1</span>] * highest_power % M + haystack[i + n - <span class="number">1</span>]) % M; <span class="comment">// 这里highest_power是B的n次方，因为先整体左移再减高位，如果先减高位再整体左移就是n-1次方了</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (hh == nh &amp;&amp; haystack.substr(i, n) == needle) <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -343,23 +343,23 @@
           
       <div class="tabs tabs-comment">
         <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-livere">评论</a></li>
             <li class="tab"><a href="#comment-disqus">Comments</a></li>
+            <li class="tab"><a href="#comment-livere">评论</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane livere" id="comment-livere">
-              
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
-  </div>
-  
-            </div>
             <div class="tab-pane disqus" id="comment-disqus">
               
   <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
+  </div>
+  
+            </div>
+            <div class="tab-pane livere" id="comment-livere">
+              
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDI0MC8yNjczMA=="></div>
   </div>
   
             </div>
@@ -641,24 +641,6 @@ if (document.querySelectorAll('pre.mermaid').length) {
       });
   </script>
 
-  
-    
-      <script>
-        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
-          window.livereOptions = {
-            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
-          };
-          (function(d, s) {
-            var j, e = d.getElementsByTagName(s)[0];
-            if (typeof LivereTower === 'function') { return; }
-            j = d.createElement(s);
-            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-            j.async = true;
-            e.parentNode.insertBefore(j, e);
-          })(document, 'script');
-        });
-      </script>
-
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -689,6 +671,24 @@ if (document.querySelectorAll('pre.mermaid').length) {
     }
   });
 </script>
+
+  
+    
+      <script>
+        NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+          window.livereOptions = {
+            refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+          };
+          (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+            if (typeof LivereTower === 'function') { return; }
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+            e.parentNode.insertBefore(j, e);
+          })(document, 'script');
+        });
+      </script>
 
 </body>
 </html>

@@ -30,7 +30,7 @@
 <meta property="og:description" content="dp O(NL) time O(NL) space这道题的建模应该先从如何生成一个播放列表入手，因为有K首歌之内不能重复这个限制条件，所以我们一定是要一首歌一首歌往播放列表里添加并且每次都要检查是否跟前K首歌重复，如果重复则选择另外一首歌，所以我们只考虑不重复的合法情况：  跟当前已生成的播放列表完全不重复，这样的歌就是所有还未选择过的歌 跟前K首歌不重复但是跟K首歌之前的歌有重复，这样的歌就是已">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-12-31T16:23:44.000Z">
-<meta property="article:modified_time" content="2020-12-31T16:25:40.090Z">
+<meta property="article:modified_time" content="2021-01-31T04:48:44.449Z">
 <meta property="article:author" content="Chang Liu">
 <meta property="article:tag" content="LeetCode">
 <meta property="article:tag" content="Dynamic programming">
@@ -240,10 +240,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-12-31 11:23:44 / Modified: 11:25:40" itemprop="dateCreated datePublished" datetime="2020-12-31T11:23:44-05:00">2020-12-31</time>
+              <time title="Created: 2020-12-31 11:23:44" itemprop="dateCreated datePublished" datetime="2020-12-31T11:23:44-05:00">2020-12-31</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-30 23:48:44" itemprop="dateModified" datetime="2021-01-30T23:48:44-05:00">2021-01-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -302,9 +308,9 @@
 <p>那么需要return的答案便为：dp[L][N] (因为每首歌必须至少出现一次，故这L首歌去除重复后一定有N首歌)</p>
 <p>对于dp[l][n]的求解，需要分类讨论：</p>
 <ol>
-<li><p>播放表的第l首歌跟前面的(l -1)首都不一样，则对于dp[l][n]，我们可以先使用(n-1)首歌排好播放表的前(l -1)首歌，然后从剩下的(N - (n -1))首歌<br>里面再任意取一首歌，放在第l个位置，即：<br>dp[l][n] += dp[l -1][n -1] * (N - (n - 1))</p>
+<li><p>播放表的第l首歌跟前面的(l - 1)首都不一样，则对于dp[l][n]，我们可以先使用(n - 1)首歌排好播放表的前(l - 1)首歌，然后从剩下的(N - (n - 1))首歌<br>里面再任意取一首歌，放在第l个位置，即：<br>dp[l][n] += dp[l - 1][n - 1] * (N - (n - 1))</p>
 </li>
-<li><p>播放表的第l首歌跟前面的(l -1)首存在重复的，则对于dp[l][n]，我们可以先使用n首歌排好前面的(l -1)首歌，然后因为保证任意两首相同的歌之间至<br>少有k首不同的歌，故对于dp[l -1][n]里面的方案，最后的k首歌一定不一样，故我们只需要选一首跟最后面的k首歌不一样的歌，放在第l个位置即可，即：<br>dp[l][n] += dp[l -1][n] * (n - k)</p>
+<li><p>播放表的第l首歌跟前面的(l - 1)首存在重复的，则对于dp[l][n]，我们可以先使用n首歌排好前面的(l - 1)首歌，然后因为保证任意两首相同的歌之间至<br>少有k首不同的歌，故对于dp[l - 1][n]里面的方案，最后的k首歌一定不一样，故我们只需要选一首跟最后面的k首歌不一样的歌，放在第l个位置即可，即：<br>dp[l][n] += dp[l - 1][n] * (n - k)</p>
 </li>
 </ol>
 <p>此题得解，时间复杂度:O(NL)<br>注意一开始的初始化：dp[0][0] = 1</p>

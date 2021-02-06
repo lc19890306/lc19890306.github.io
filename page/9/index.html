@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">408</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">411</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -207,6 +207,302 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/18/235-Lowest-Common-Ancestor-of-a-Binary-Search-Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/18/235-Lowest-Common-Ancestor-of-a-Binary-Search-Tree/" class="post-title-link" itemprop="url">235. Lowest Common Ancestor of a Binary Search Tree</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-18 16:40:49" itemprop="dateCreated datePublished" datetime="2021-01-18T16:40:49-05:00">2021-01-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-25 02:17:06" itemprop="dateModified" datetime="2021-01-25T02:17:06-05:00">2021-01-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/18/235-Lowest-Common-Ancestor-of-a-Binary-Search-Tree/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/18/235-Lowest-Common-Ancestor-of-a-Binary-Search-Tree/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>O(h)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="keyword">if</span> (!p || !q) <span class="keyword">return</span> root;</span><br><span class="line">        <span class="keyword">auto</span> [s, l] = minmax(p-&gt;val, q-&gt;val);</span><br><span class="line">        <span class="keyword">if</span> (s &lt;= root-&gt;val &amp;&amp; root-&gt;val &lt;= l) <span class="keyword">return</span> root; <span class="comment">// 注意等于的case，说明p和q一个是另一个的父节点</span></span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &lt; s) <span class="keyword">return</span> lowestCommonAncestor(root-&gt;right, p, q);</span><br><span class="line">        <span class="keyword">if</span> (l &lt; root-&gt;val) <span class="keyword">return</span> lowestCommonAncestor(root-&gt;left, p, q);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> [lo, hi] = minmax(p-&gt;val, q-&gt;val);</span><br><span class="line">        <span class="keyword">if</span> (lo &lt;= root-&gt;val &amp;&amp; root-&gt;val &lt;= hi) <span class="keyword">return</span> root;</span><br><span class="line">        <span class="keyword">return</span> hi &lt; root-&gt;val ? lowestCommonAncestor(root-&gt;left, p, q) : lowestCommonAncestor(root-&gt;right, p, q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/18/188-Best-Time-to-Buy-and-Sell-Stock-IV/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/18/188-Best-Time-to-Buy-and-Sell-Stock-IV/" class="post-title-link" itemprop="url">188. Best Time to Buy and Sell Stock IV</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-18 16:33:01 / Modified: 16:35:14" itemprop="dateCreated datePublished" datetime="2021-01-18T16:33:01-05:00">2021-01-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/18/188-Best-Time-to-Buy-and-Sell-Stock-IV/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/18/188-Best-Time-to-Buy-and-Sell-Stock-IV/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>dp II跟III的结合版</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span> k, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = prices.size();</span><br><span class="line">        <span class="keyword">if</span> (n &lt; <span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (k &gt; n / <span class="number">2</span>) &#123; <span class="comment">// 当k超过天数一半则不存在k个交易such that所有交易都不相邻，所以任意多个不相邻的交易的总数都不会超过k个</span></span><br><span class="line">            <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">                res += max(prices[i] - prices[i - <span class="number">1</span>], <span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> m = <span class="number">2</span> * k + <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;</span><br><span class="line">                <span class="keyword">int</span> diff = prices[i] - prices[i - <span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (j &amp; <span class="number">1</span>) &#123;</span><br><span class="line">                    f[i][j] = max(f[i - <span class="number">1</span>][j] + diff, f[i - <span class="number">1</span>][j - <span class="number">1</span>]);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    f[i][j] = max(f[i - <span class="number">1</span>][j], j &gt; <span class="number">0</span> ? f[i - <span class="number">1</span>][j - <span class="number">1</span>] + diff : <span class="number">0</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *max_element(f[n - <span class="number">1</span>].begin(), f[n - <span class="number">1</span>].end());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span> k, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = prices.size();</span><br><span class="line">        <span class="keyword">if</span> (n &lt; <span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (k &gt; n / <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">                res += max(prices[i] - prices[i - <span class="number">1</span>], <span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> m = <span class="number">2</span> * k + <span class="number">1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">f</span><span class="params">(m)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = m - <span class="number">1</span>; j &gt;= <span class="number">0</span>; --j) &#123;</span><br><span class="line">                <span class="keyword">int</span> diff = prices[i] - prices[i - <span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (j &amp; <span class="number">1</span>) &#123;</span><br><span class="line">                    f[j] = max(f[j] + diff, f[j - <span class="number">1</span>]);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    f[j] = max(f[j], j &gt; <span class="number">0</span> ? f[j - <span class="number">1</span>] + diff : <span class="number">0</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *max_element(begin(f), end(f));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/18/1528-Shuffle-String/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/18/1528-Shuffle-String/" class="post-title-link" itemprop="url">1528. Shuffle String</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-18 16:02:22 / Modified: 16:02:49" itemprop="dateCreated datePublished" datetime="2021-01-18T16:02:22-05:00">2021-01-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/18/1528-Shuffle-String/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/18/1528-Shuffle-String/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>342</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>类似快慢指针找cycle O(n) time O(1) space</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">restoreString</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; indices)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; indices.size(); ++i) &#123;</span><br><span class="line">            <span class="keyword">while</span> (i != indices[i]) &#123; <span class="comment">// 只要当前位置不是正确的index就一直swap</span></span><br><span class="line">                swap(s[i], s[indices[i]]); <span class="comment">// 保持字符串跟indices数组同步即可</span></span><br><span class="line">                swap(indices[i], indices[indices[i]]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -899,313 +1195,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/18/159-Longest-Substring-with-At-Most-Two-Distinct-Characters/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/18/159-Longest-Substring-with-At-Most-Two-Distinct-Characters/" class="post-title-link" itemprop="url">159. Longest Substring with At Most Two Distinct Characters</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-18 15:03:50 / Modified: 15:04:38" itemprop="dateCreated datePublished" datetime="2021-01-18T15:03:50-05:00">2021-01-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/18/159-Longest-Substring-with-At-Most-Two-Distinct-Characters/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/18/159-Longest-Substring-with-At-Most-Two-Distinct-Characters/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>678</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>O(n) time O(26) space</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstringTwoDistinct</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>, r = <span class="number">0</span>; r &lt; n; ++r) &#123;</span><br><span class="line">            ++m[s[r]];</span><br><span class="line">            <span class="keyword">while</span> (l &lt; r &amp;&amp; m.size() &gt; <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (--m[s[l]] == <span class="number">0</span>) &#123;</span><br><span class="line">                    m.erase(s[l]);</span><br><span class="line">                &#125;</span><br><span class="line">                ++l;</span><br><span class="line">            &#125;</span><br><span class="line">            res = max(res, r + <span class="number">1</span> - l);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>lee的做法</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstringTwoDistinct</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, l = <span class="number">0</span>, r = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (; r &lt; n; ++r) &#123;</span><br><span class="line">            ++m[s[r]];</span><br><span class="line">            <span class="keyword">if</span> (m.size() &gt; <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (--m[s[l]] == <span class="number">0</span>) &#123;</span><br><span class="line">                    m.erase(s[l]);</span><br><span class="line">                &#125;</span><br><span class="line">                ++l;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r - l;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/18/136-Single-Number/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/18/136-Single-Number/" class="post-title-link" itemprop="url">136. Single Number</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-18 15:01:24 / Modified: 15:02:18" itemprop="dateCreated datePublished" datetime="2021-01-18T15:01:24-05:00">2021-01-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/18/136-Single-Number/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/18/136-Single-Number/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>168</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>O(n) time O(1) space</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x : nums) &#123;</span><br><span class="line">            res ^= x;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/18/1027-Longest-Arithmetic-Subsequence/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/18/1027-Longest-Arithmetic-Subsequence/" class="post-title-link" itemprop="url">1027. Longest Arithmetic Subsequence</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-18 12:21:13 / Modified: 12:24:06" itemprop="dateCreated datePublished" datetime="2021-01-18T12:21:13-05:00">2021-01-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/18/1027-Longest-Arithmetic-Subsequence/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/18/1027-Longest-Arithmetic-Subsequence/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>4.5k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>4 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>上来先clarify数的取值范围，然后再决定用哪个</p>
-<p>O(n<sup>2</sup>) time O(n<sup>2</sup>) space<br>对于每个A[i]，从前往后枚举之前的每个A[j]，得到一个等差d，利用以A[j]结尾的等差数列长度来更新以A[i]结尾的等差数列的长度</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestArithSeqLength</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; A)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = A.size(), res = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; f(n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; ++j) &#123; <span class="comment">// 一定要从前往后，因为是要找最长的，后边的可能更长</span></span><br><span class="line">                <span class="keyword">int</span> d = A[i] - A[j];</span><br><span class="line">                f[i][d] = max(<span class="number">2</span>, f[j][d] + <span class="number">1</span>);</span><br><span class="line">                res = max(res, f[i][d]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>O(n<sup>2</sup>) time O(1001n) space</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestArithSeqLength</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; A)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = A.size(), res = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">1001</span>));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; ++j) &#123; <span class="comment">// 一定要从前往后，因为是要找最长的，后边的可能更长</span></span><br><span class="line">                <span class="keyword">int</span> d = A[i] - A[j] + <span class="number">500</span>;</span><br><span class="line">                f[i][d] = max(<span class="number">2</span>, f[j][d] + <span class="number">1</span>);</span><br><span class="line">                res = max(res, f[i][d]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>O(500n) time O(500) space<br>因为题目里每个数都是在0到500之间，所以等差的绝对值肯定是在0到500之间，维护正数等差和负数等差两个数组来记录以x为最后一个数的等差数列的长度，从0到500枚举所有可能的等差，对于每个可能的等差d再枚举数组里的每个数x，看x之前数组里有没有x - d和x + d，用他们的等差数列的长度来更新x的长度，然后再更新全局res</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestArithSeqLength</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; A)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos_step[<span class="number">501</span>], neg_step[<span class="number">501</span>];</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">0</span>; d &lt;= <span class="number">500</span>; ++d) &#123;</span><br><span class="line">            <span class="built_in">memset</span>(pos_step, <span class="number">0</span>, <span class="keyword">sizeof</span>(pos_step));</span><br><span class="line">            <span class="built_in">memset</span>(neg_step, <span class="number">0</span>, <span class="keyword">sizeof</span>(neg_step));</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> x : A) &#123;</span><br><span class="line">                pos_step[x] = x &lt; d ? <span class="number">1</span> : pos_step[x - d] + <span class="number">1</span>;</span><br><span class="line">                neg_step[x] = x + d &gt; <span class="number">500</span> ? <span class="number">1</span> : neg_step[x + d] + <span class="number">1</span>;</span><br><span class="line">                res = max(res, pos_step[x]);</span><br><span class="line">                res = max(res, neg_step[x]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (d &gt; <span class="number">0</span> &amp;&amp; <span class="number">501</span> / d &lt; res) <span class="keyword">break</span>; <span class="comment">// 优化：因为等差d从小到大枚举并更新res，如果当前的等差所能产生的最大长度不足以超过之前的res则没必要继续枚举了，直接返回即可</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/18/1027-Longest-Arithmetic-Subsequence/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1271,7 +1264,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">408</span>
+          <span class="site-state-item-count">411</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1350,13 +1343,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">608k</span>
+    <span title="Symbols count total">613k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">9:12</span>
+    <span title="Reading time total">9:17</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

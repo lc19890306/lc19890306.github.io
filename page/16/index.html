@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">411</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">413</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -207,6 +207,203 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/14/399-Evaluate-Division/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/14/399-Evaluate-Division/" class="post-title-link" itemprop="url">399. Evaluate Division</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-14 22:59:24 / Modified: 22:59:52" itemprop="dateCreated datePublished" datetime="2021-01-14T22:59:24-05:00">2021-01-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/14/399-Evaluate-Division/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/14/399-Evaluate-Division/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>bfs O(n) 有向图连通性</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; <span class="title">calcEquation</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;&amp; equations, <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; values, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;&amp; queries)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; equations.size(); ++i) &#123;</span><br><span class="line">            g[equations[i][<span class="number">0</span>]][equations[i][<span class="number">1</span>]] = values[i];</span><br><span class="line">            g[equations[i][<span class="number">1</span>]][equations[i][<span class="number">0</span>]] = <span class="number">1</span> / values[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; ret;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp;&amp; query : queries) &#123;</span><br><span class="line">            ret.emplace_back(helper(query[<span class="number">0</span>], query[<span class="number">1</span>]));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">helper</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;begin, <span class="keyword">const</span> <span class="built_in">string</span> &amp;end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (g.count(begin) == <span class="number">0</span> || g.count(end) == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1.0</span>;</span><br><span class="line">        <span class="keyword">if</span> (g.count(begin) &amp;&amp; g[begin].count(end)) <span class="keyword">return</span> g[begin][end]; <span class="comment">// 假如cache里有则直接返回</span></span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; s; <span class="comment">// 避免重复访问</span></span><br><span class="line">        <span class="built_in">queue</span>&lt;<span class="built_in">pair</span>&lt;<span class="built_in">string</span>, <span class="keyword">double</span>&gt;&gt; q&#123;&#123;&#123;begin, <span class="number">1.0</span>&#125;&#125;&#125;; <span class="comment">// key是点value是从begin到这个点的累乘结果，也就是begin / key的结果</span></span><br><span class="line">        <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">            <span class="keyword">auto</span> [u, product] = q.front(); q.pop();</span><br><span class="line">            <span class="keyword">if</span> (s.count(u)) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span> (g[u].count(end)) <span class="keyword">return</span> product * g[u][end];</span><br><span class="line">            s.emplace(u);</span><br><span class="line">            g[begin][u] = product; <span class="comment">// cache中间结果</span></span><br><span class="line">            g[u][begin] = <span class="number">1</span> / product;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> [v, quotient] : g[u]) &#123;</span><br><span class="line">                q.emplace(v, product * quotient);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="keyword">double</span>&gt;&gt; g; <span class="comment">// 这道题需要用邻接矩阵</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/14/1055-Shortest-Way-to-Form-String/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/14/1055-Shortest-Way-to-Form-String/" class="post-title-link" itemprop="url">1055. Shortest Way to Form String</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-14 22:24:47 / Modified: 22:25:28" itemprop="dateCreated datePublished" datetime="2021-01-14T22:24:47-05:00">2021-01-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/14/1055-Shortest-Way-to-Form-String/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/14/1055-Shortest-Way-to-Form-String/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.1k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>2 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>greedy O(m+n) time<br>f[i][c]表示在source中从下标i开始第一次出现的字母c在source中的下标，这样做可以跳过中间不符合要求的那些字母方便快速查找</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">shortestWay</span><span class="params">(<span class="built_in">string</span> source, <span class="built_in">string</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = source.length(), n = target.length();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(m, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">26</span>, <span class="number">-1</span>));</span><br><span class="line">        f[m - <span class="number">1</span>][source[m - <span class="number">1</span>] - <span class="string">&#x27;a&#x27;</span>] = m - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = m - <span class="number">2</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">            f[i] = f[i + <span class="number">1</span>]; <span class="comment">// 先copy后一个index的内容</span></span><br><span class="line">            f[i][source[i] - <span class="string">&#x27;a&#x27;</span>] = i; <span class="comment">// 再修改当前index所对应的字符的下标</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">1</span>, i = <span class="number">0</span>; <span class="comment">// res要从1开始因为target最后一个字符结束以后没法更新res</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : target) &#123;</span><br><span class="line">            <span class="keyword">if</span> (f[<span class="number">0</span>][c - <span class="string">&#x27;a&#x27;</span>] == <span class="number">-1</span>) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 如果source所有字符里都不包含c</span></span><br><span class="line">            <span class="keyword">if</span> (i == m || f[i][c - <span class="string">&#x27;a&#x27;</span>] == <span class="number">-1</span>) &#123; <span class="comment">// 如果source所有字符都比对完或者尚未比对完但是source当前位置之后没有c（之前可能有）则重置指针并更新res</span></span><br><span class="line">                i = <span class="number">0</span>;</span><br><span class="line">                ++res;</span><br><span class="line">            &#125;</span><br><span class="line">            i = f[i][c - <span class="string">&#x27;a&#x27;</span>] + <span class="number">1</span>; <span class="comment">// 移动指针到下一个可能的位置（跳过中间不符合要求的字符）</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>greedy O(m*n) time<br>worst case比如[“abcd”, “ddddd”]</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">shortestWay</span><span class="params">(<span class="built_in">string</span> source, <span class="built_in">string</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = size(source), n = size(target);</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n;) &#123;</span><br><span class="line">            <span class="keyword">int</span> t = i;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i &lt; n &amp;&amp; source[j] == target[i]) &#123;</span><br><span class="line">                    ++i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (i == t) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            ++res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">shortestWay</span><span class="params">(<span class="built_in">string</span> source, <span class="built_in">string</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = source.length(), n = target.length();</span><br><span class="line">        <span class="keyword">bool</span> f[<span class="number">26</span>] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : source) &#123;</span><br><span class="line">            f[c - <span class="string">&#x27;a&#x27;</span>] = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; n; ++i, ++j) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!f[target[i] - <span class="string">&#x27;a&#x27;</span>]) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">while</span> (j &lt; m &amp;&amp; source[j] != target[i]) ++j;</span><br><span class="line">            <span class="keyword">if</span> (j == m) &#123;</span><br><span class="line">                j = <span class="number">-1</span>;</span><br><span class="line">                --i;</span><br><span class="line">                ++res;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>dp O(m*m+(n-m)*n) time<br>f[i]表示target前i个字符需要几个source的子序列才能构成</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">shortestWay</span><span class="params">(<span class="built_in">string</span> source, <span class="built_in">string</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = source.length(), n = target.length();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">f</span><span class="params">(n + <span class="number">1</span>, INT_MAX)</span></span>;</span><br><span class="line">        f[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">int</span> k = m - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span>; --j) &#123;</span><br><span class="line">                <span class="keyword">while</span> (k &gt;= <span class="number">0</span> &amp;&amp; source[k] != target[j]) --k;</span><br><span class="line">                <span class="keyword">if</span> (k == <span class="number">-1</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (f[i] == INT_MAX) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    f[i] = min(f[i], f[j] + <span class="number">1</span>);<span class="comment">//cout&lt;&lt;&quot;f[&quot;&lt;&lt;i&lt;&lt;&quot;] = &quot;&lt;&lt;f[i]&lt;&lt;endl;</span></span><br><span class="line">                    --k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1026,206 +1223,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/12/416-Partition-Equal-Subset-Sum/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/12/416-Partition-Equal-Subset-Sum/" class="post-title-link" itemprop="url">416. Partition Equal Subset Sum</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-12 23:39:49" itemprop="dateCreated datePublished" datetime="2021-01-12T23:39:49-05:00">2021-01-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-26 22:22:44" itemprop="dateModified" datetime="2021-01-26T22:22:44-05:00">2021-01-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/12/416-Partition-Equal-Subset-Sum/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/12/416-Partition-Equal-Subset-Sum/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>758</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/grandyang/p/5951422.html">solution</a><br>O(n)<br>bitset的第i位表示数i能不能通过若干个数组成，通过左移+或可以求出所有可能的和，左移相当于在利用之前所有数得到的所有可能的和的基础上再加上当前这个数，为了不丢失之前的结果还需要或上之前的所有可能的和</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canPartition</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = accumulate(nums.begin(), nums.end(), <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span> (sum &amp; <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        sum &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">bitset</span>&lt;10001&gt; <span class="title">sums</span><span class="params">(<span class="number">1</span>)</span></span>; <span class="comment">// 这里10001够了，因为累加和的一半不会超过10001</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums) &#123;</span><br><span class="line">            sums |= (sums &lt;&lt; num);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sums[sum];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>knapsack O(n * sum/2)</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canPartition</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> s = accumulate(begin(nums), end(nums), <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span> (s &amp; <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        s &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">f</span><span class="params">(s + <span class="number">1</span>)</span></span>;</span><br><span class="line">        f[<span class="number">0</span>] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x : nums) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> t = s; t &gt;= x; --t) &#123;</span><br><span class="line">                f[t] = f[t] || f[t - x];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[s];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/12/332-Reconstruct-Itinerary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/12/332-Reconstruct-Itinerary/" class="post-title-link" itemprop="url">332. Reconstruct Itinerary</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-12 23:28:05 / Modified: 23:28:53" itemprop="dateCreated datePublished" datetime="2021-01-12T23:28:05-05:00">2021-01-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/12/332-Reconstruct-Itinerary/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/12/332-Reconstruct-Itinerary/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>790</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>基于dfs的类拓扑排序（不是真的拓扑排序） O(n) time O(n) space<br>后序遍历，当一个节点的所有子节点都被遍历过之后，将该节点加入，因为是倒序，所有最后要翻转过来，因为是类似拓扑排序，所以出度为0的末端点（最多一个）即便最先被访问也是第一个入栈，要排在最后<br>如果没有出度为0的点，前序遍历也是可以的，但是出度为0的点没有子节点所以必须最后访问，只有栈+后序遍历才能做到</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">findItinerary</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;&amp; tickets)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (tickets.empty()) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;e : tickets) &#123;</span><br><span class="line">            g[e[<span class="number">0</span>]].insert(e[<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        dfs(<span class="string">&quot;JFK&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;(rbegin(res), rend(res));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;u)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!g[u].empty()) &#123;</span><br><span class="line">            <span class="keyword">auto</span> it = begin(g[u]);</span><br><span class="line">            <span class="keyword">auto</span> v = *it;</span><br><span class="line">            g[u].erase(it); <span class="comment">// 删除以避免重复访问</span></span><br><span class="line">            dfs(v);</span><br><span class="line">        &#125;</span><br><span class="line">        res.push_back(u);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="built_in">multiset</span>&lt;<span class="built_in">string</span>&gt;&gt; g; <span class="comment">// 因为需要字典序所以要用set，因为一个起点可以多次去一个中点所以要用multiset</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1295,7 +1292,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">411</span>
+          <span class="site-state-item-count">413</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1374,13 +1371,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">613k</span>
+    <span title="Symbols count total">614k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">9:17</span>
+    <span title="Reading time total">9:18</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

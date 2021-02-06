@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">411</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">413</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -207,6 +207,206 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/12/13/727-Minimum-Window-Subsequence/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/13/727-Minimum-Window-Subsequence/" class="post-title-link" itemprop="url">727. Minimum Window Subsequence</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-13 23:27:20 / Modified: 23:36:41" itemprop="dateCreated datePublished" datetime="2020-12-13T23:27:20-05:00">2020-12-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2020/12/13/727-Minimum-Window-Subsequence/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/12/13/727-Minimum-Window-Subsequence/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>3 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这道题跟<a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-window-substring/">76. Minimum Window Substring</a>不一样，那个题是找anagram，不需要保持顺序，这个需要<br>O(mn) time O(mn) space<br>把S的每个字符的位置按顺序记录在对应的T的每个字符的bucket里，因为S里的子序列必须严格follow T的顺序所以T的每个bucket对应的下标必须严格递增，扫描所有的bucket将不合法的下标排除，每次扫完更新全局结果即可</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">minWindow</span><span class="params">(<span class="built_in">string</span> S, <span class="built_in">string</span> T)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; c2q;</span><br><span class="line">        <span class="keyword">int</span> m = S.length(), n = T.length();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            c2q[T[i]].push_back(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt;&gt; q(n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (c2q.count(S[i])) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j : c2q[S[i]]) &#123;</span><br><span class="line">                    q[j].push(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (q[<span class="number">0</span>].empty()) <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">-1</span>, r = m;</span><br><span class="line">        <span class="keyword">while</span> (!q[<span class="number">0</span>].empty()) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">                <span class="keyword">while</span> (!q[i].empty() &amp;&amp; q[i - <span class="number">1</span>].front() &gt;= q[i].front()) &#123;</span><br><span class="line">                    q[i].pop();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (q[i].empty()) <span class="keyword">return</span> l == <span class="number">-1</span> ? <span class="string">&quot;&quot;</span> : S.substr(l, r + <span class="number">1</span> - l); <span class="comment">// 如果有任何一个bucket空了，说明S里不存在合法的子序列或者之前已找到的子序列已经最优</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (q[n - <span class="number">1</span>].front() - q[<span class="number">0</span>].front() &lt; r - l) &#123;</span><br><span class="line">                l = q[<span class="number">0</span>].front();</span><br><span class="line">                r = q[n - <span class="number">1</span>].front();</span><br><span class="line">            &#125;</span><br><span class="line">            q[<span class="number">0</span>].pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> S.substr(l, r + <span class="number">1</span> - l);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>双指针 O(mn) time O(1) space<br>先正着扫找符合要求的子序列，再倒着扫找到最短的子序列，类似sliding window</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">minWindow</span><span class="params">(<span class="built_in">string</span> S, <span class="built_in">string</span> T)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">-1</span>, len = INT_MAX;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> m = size(S), n = size(T), i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; m;) &#123;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; m &amp;&amp; j &lt; n) &#123; <span class="comment">// 正向在S里找到第一个包含T序列的子串</span></span><br><span class="line">                <span class="keyword">if</span> (S[i] == T[j]) ++j;</span><br><span class="line">                ++i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (j == n) &#123; <span class="comment">// 如果找到</span></span><br><span class="line">                <span class="keyword">int</span> e = i; <span class="comment">// 先记录当前尾下标</span></span><br><span class="line">                --i; --j; <span class="comment">// 回退两个指针</span></span><br><span class="line">                <span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; j &gt;= <span class="number">0</span>) &#123; <span class="comment">// 倒着在当前子串里找最大的起始下标</span></span><br><span class="line">                    <span class="keyword">if</span> (S[i] == T[j]) --j;</span><br><span class="line">                    --i;</span><br><span class="line">                &#125;</span><br><span class="line">                ++i; ++j; <span class="comment">// 修正指针得到最大起始下标</span></span><br><span class="line">                <span class="keyword">if</span> (e - i &lt; len) &#123; <span class="comment">// 更新结果</span></span><br><span class="line">                    len = e - i;</span><br><span class="line">                    b = i;</span><br><span class="line">                &#125;</span><br><span class="line">                ++i; <span class="comment">// 别忘了找到了一个可能结果还要往前移动指针继续找</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> b == <span class="number">-1</span> ? <span class="string">&quot;&quot;</span> : S.substr(b, len);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>dp O(mn) time O(mn) space<br>f[i][j]表示S的前i个字符里包括T的前j个字符的子序列的最大的起始下标<br>需要维护一个全局最小起始下标和全局最小子序列长度<br>如果S[i - 1] == T[j - 1]则f[i][j]直接继承f[i - 1][j - 1]否则f[i][j]继承f[i - 1][j]即S的前i - 2个字符里包括T的前j个字符的子序列的最大的起始下标</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">minWindow</span><span class="params">(<span class="built_in">string</span> S, <span class="built_in">string</span> T)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = S.length(), n = T.length(), mn = m, b = <span class="number">-1</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(m + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n + <span class="number">1</span>, <span class="number">-1</span>));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= m; ++i) &#123; <span class="comment">// S的前i个字符和T的前0个字符空串的最大起始下标即为i这样f[i][0] - i为0，即不存在这样的子序列</span></span><br><span class="line">            f[i][<span class="number">0</span>] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= min(i, n); ++j) &#123;</span><br><span class="line">                f[i][j] = S[i - <span class="number">1</span>] == T[j - <span class="number">1</span>] ? f[i - <span class="number">1</span>][j - <span class="number">1</span>] : f[i - <span class="number">1</span>][j];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (f[i][n] != <span class="number">-1</span>) &#123; <span class="comment">// 如果S的前i个字符包括整个T则进行更新</span></span><br><span class="line">                <span class="keyword">if</span> (i - f[i][n] &lt; mn) &#123;</span><br><span class="line">                    mn = i - f[i][n];</span><br><span class="line">                    b = f[i][n];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> b == <span class="number">-1</span> ? <span class="string">&quot;&quot;</span> : S.substr(b, mn);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>dp O(mn) time O(n) space</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">minWindow</span><span class="params">(<span class="built_in">string</span> S, <span class="built_in">string</span> T)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = S.length(), n = T.length(), mn = m, b = <span class="number">-1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">f</span><span class="params">(n + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        f[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; ++i) &#123;</span><br><span class="line">            <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">t</span><span class="params">(n + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">            t[<span class="number">0</span>] = i;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= min(i, n); ++j) &#123;</span><br><span class="line">                t[j] = S[i - <span class="number">1</span>] == T[j - <span class="number">1</span>] ? f[j - <span class="number">1</span>] : f[j];</span><br><span class="line">            &#125;</span><br><span class="line">            t.swap(f);</span><br><span class="line">            <span class="keyword">if</span> (f[n] != <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i - f[n] &lt; mn) &#123;</span><br><span class="line">                    mn = i - f[n];</span><br><span class="line">                    b = f[n];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> b == <span class="number">-1</span> ? <span class="string">&quot;&quot;</span> : S.substr(b, mn);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/12/13/127-Word-Ladder/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/13/127-Word-Ladder/" class="post-title-link" itemprop="url">127. Word Ladder</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-13 22:19:21 / Modified: 22:20:01" itemprop="dateCreated datePublished" datetime="2020-12-13T22:19:21-05:00">2020-12-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2020/12/13/127-Word-Ladder/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/12/13/127-Word-Ladder/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>bfs O(nm)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">ladderLength</span><span class="params">(<span class="built_in">string</span> beginWord, <span class="built_in">string</span> endWord, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordList)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; <span class="title">s</span><span class="params">(begin(wordList), end(wordList))</span></span>;</span><br><span class="line">        <span class="built_in">queue</span>&lt;<span class="built_in">string</span>&gt; q&#123;&#123;beginWord&#125;&#125;;</span><br><span class="line">        s.erase(beginWord); <span class="comment">// 如果beginWord在字典里则将其删去</span></span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = q.size(); i &gt; <span class="number">0</span>; --i) &#123;</span><br><span class="line">                <span class="keyword">auto</span> w = q.front(); q.pop();</span><br><span class="line">                <span class="keyword">if</span> (w == endWord) <span class="keyword">return</span> res;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">char</span> &amp;c : w) &#123;</span><br><span class="line">                    <span class="keyword">auto</span> t = c;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">char</span> x = <span class="string">&#x27;a&#x27;</span>; x &lt;= <span class="string">&#x27;z&#x27;</span>; ++x) &#123;</span><br><span class="line">                        c = x;</span><br><span class="line">                        <span class="keyword">if</span> (!s.count(w) || t == x) <span class="keyword">continue</span>;</span><br><span class="line">                        s.erase(w);</span><br><span class="line">                        q.push(w);</span><br><span class="line">                    &#125;</span><br><span class="line">                    c = t;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ++res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>bfs O(nm) n是单词个数 m是单词平均长度</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">ladderLength</span><span class="params">(<span class="built_in">string</span> beginWord, <span class="built_in">string</span> endWord, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordList)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">queue</span>&lt;<span class="built_in">string</span>&gt; q;</span><br><span class="line">        q.push(beginWord);</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">            ++res;</span><br><span class="line">            <span class="keyword">int</span> n = q.size();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">                <span class="keyword">auto</span> w = q.front();</span><br><span class="line">                q.pop();</span><br><span class="line">                <span class="keyword">if</span> (w == endWord) <span class="keyword">return</span> res;</span><br><span class="line">                <span class="keyword">int</span> m = wordList.size();</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;</span><br><span class="line">                    <span class="keyword">while</span> (j &lt; m &amp;&amp; isSimilar(w, wordList[j])) &#123;</span><br><span class="line">                        q.push(wordList[j]);</span><br><span class="line">                        swap(wordList[j], wordList[m - <span class="number">1</span>]);</span><br><span class="line">                        wordList.pop_back();</span><br><span class="line">                        --m;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSimilar</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s1, <span class="keyword">const</span> <span class="built_in">string</span> &amp;s2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = s1.length();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            cnt += (s1[i] != s2[i]);</span><br><span class="line">            <span class="keyword">if</span> (cnt &gt; <span class="number">1</span>) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cnt == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -985,204 +1185,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/12/13/79-Word-Search/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/13/79-Word-Search/" class="post-title-link" itemprop="url">79. Word Search</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-13 00:49:39" itemprop="dateCreated datePublished" datetime="2020-12-13T00:49:39-05:00">2020-12-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-31 21:35:14" itemprop="dateModified" datetime="2021-01-31T21:35:14-05:00">2021-01-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2020/12/13/79-Word-Search/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/12/13/79-Word-Search/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>803</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>DFS O(mn*4<sup>k</sup>) mn是board的宽和长，k是word长度</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">exist</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board, <span class="built_in">string</span> word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (board.empty() || board[<span class="number">0</span>].empty() || word.empty()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        m = board.size(), n = board[<span class="number">0</span>].size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (exist(board, i, j, word, <span class="number">0</span>)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">exist</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt; &amp;board, <span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">const</span> <span class="built_in">string</span> &amp;word, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (b == word.length()) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; <span class="number">0</span> || j &lt; <span class="number">0</span> || i &gt;= m || j &gt;= n || board[i][j] != word[b]) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        board[i][j] = <span class="string">&#x27;#&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">4</span>; ++k) &#123;</span><br><span class="line">            <span class="keyword">if</span> (exist(board, i + dy[k], j + dx[k], word, b + <span class="number">1</span>)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        board[i][j] = word[b];</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> m, n, dx[<span class="number">4</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">1</span>&#125;, dy[<span class="number">4</span>] = &#123;<span class="number">-1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2020/12/12/622-Design-Circular-Queue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/12/622-Design-Circular-Queue/" class="post-title-link" itemprop="url">622. Design Circular Queue</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-12-12 23:47:39 / Modified: 23:50:08" itemprop="dateCreated datePublished" datetime="2020-12-12T23:47:39-05:00">2020-12-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2020/12/12/622-Design-Circular-Queue/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/12/12/622-Design-Circular-Queue/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.4k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>O(1) time O(k) space<br>用左闭右开区间[b, e)</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyCircularQueue</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. Set the size of the queue to be k. */</span></span><br><span class="line">    MyCircularQueue(<span class="keyword">int</span> k) : k(k) &#123;</span><br><span class="line">        q.resize(k);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Insert an element into the circular queue. Return true if the operation is successful. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">enQueue</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (isFull()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        q[e] = value;</span><br><span class="line">        e = (e + <span class="number">1</span>) % k;</span><br><span class="line">        is_empty = <span class="literal">false</span>;</span><br><span class="line">        is_full = b == e;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Delete an element from the circular queue. Return true if the operation is successful. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">deQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (isEmpty()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        b = (b + <span class="number">1</span>) % k;</span><br><span class="line">        is_full = <span class="literal">false</span>;</span><br><span class="line">        is_empty = b == e;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Get the front item from the queue. */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">Front</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> isEmpty() ? <span class="number">-1</span> : q[b];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Get the last item from the queue. */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">Rear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> isEmpty() ? <span class="number">-1</span> : q[(e + k - <span class="number">1</span>) % k];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Checks whether the circular queue is empty or not. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> is_empty;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Checks whether the circular queue is full or not. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isFull</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> is_full;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">0</span>, e = <span class="number">0</span>, k;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">bool</span> is_full = <span class="literal">false</span>, is_empty = <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MyCircularQueue object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MyCircularQueue* obj = new MyCircularQueue(k);</span></span><br><span class="line"><span class="comment"> * bool param_1 = obj-&gt;enQueue(value);</span></span><br><span class="line"><span class="comment"> * bool param_2 = obj-&gt;deQueue();</span></span><br><span class="line"><span class="comment"> * int param_3 = obj-&gt;Front();</span></span><br><span class="line"><span class="comment"> * int param_4 = obj-&gt;Rear();</span></span><br><span class="line"><span class="comment"> * bool param_5 = obj-&gt;isEmpty();</span></span><br><span class="line"><span class="comment"> * bool param_6 = obj-&gt;isFull();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1252,7 +1254,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">411</span>
+          <span class="site-state-item-count">413</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1331,13 +1333,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">613k</span>
+    <span title="Symbols count total">614k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">9:17</span>
+    <span title="Reading time total">9:18</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

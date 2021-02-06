@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">407</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">408</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -207,6 +207,118 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/20/166-Fraction-to-Recurring-Decimal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/20/166-Fraction-to-Recurring-Decimal/" class="post-title-link" itemprop="url">166. Fraction to Recurring Decimal</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-20 23:45:31 / Modified: 23:52:54" itemprop="dateCreated datePublished" datetime="2021-01-20T23:45:31-05:00">2021-01-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/20/166-Fraction-to-Recurring-Decimal/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/20/166-Fraction-to-Recurring-Decimal/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>O(n) time<br>这道题的hashmap的key必须是余数（被除数）不能用商（数字）因为商可能相同但被除数不同，比如1/333小数部分开始都是0但是被除数是不一样的所以并不是循环节，真正的循环节首尾的被除数必须是一样的！</p>
+<ol>
+<li>判断被除数是否为0，是0直接返回0</li>
+<li>判断结果是否为负</li>
+<li>先处理整数部分，如果余数为0，直接返回结果</li>
+<li>处理小数部分，用一个hashmap维护小数部分每个数字的下标，方便后边插入左括号</li>
+<li>如果找到重复的数字，看该数字是否为0，如果是0则没有循环节不需要插入括号</li>
+<li>用hashmap找到需要插入左括号的位置</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">fractionToDecimal</span><span class="params">(<span class="keyword">int</span> numerator, <span class="keyword">int</span> denominator)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (numerator == <span class="number">0</span>) <span class="keyword">return</span> <span class="string">&quot;0&quot;</span>;</span><br><span class="line">        <span class="built_in">string</span> integer, decimal;</span><br><span class="line">        <span class="keyword">if</span> ((numerator ^ denominator) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            integer += <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> n = <span class="built_in">labs</span>(numerator), d = <span class="built_in">labs</span>(denominator);</span><br><span class="line">        integer += to_string(n / d);</span><br><span class="line">        n %= d;</span><br><span class="line">        <span class="keyword">if</span> (<span class="number">0</span> == n) <span class="keyword">return</span> integer;</span><br><span class="line">        integer += <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m; <span class="comment">// key是余数，value是在小数部分插入左括号的可能位置的下标</span></span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span> &amp;&amp; m.count(n) == <span class="number">0</span>) &#123;</span><br><span class="line">            m[n] = decimal.length();</span><br><span class="line">            n *= <span class="number">10</span>;</span><br><span class="line">            decimal += to_string(n / d);</span><br><span class="line">            n %= d;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">return</span> integer + decimal;</span><br><span class="line">        decimal.insert(m[n], <span class="string">&quot;(&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> integer + decimal + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/20/166-Fraction-to-Recurring-Decimal/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1084,110 +1196,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/20/1297-Maximum-Number-of-Occurrences-of-a-Substring/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/20/1297-Maximum-Number-of-Occurrences-of-a-Substring/" class="post-title-link" itemprop="url">1297. Maximum Number of Occurrences of a Substring</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-20 12:47:03 / Modified: 12:47:38" itemprop="dateCreated datePublished" datetime="2021-01-20T12:47:03-05:00">2021-01-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/20/1297-Maximum-Number-of-Occurrences-of-a-Substring/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/20/1297-Maximum-Number-of-Occurrences-of-a-Substring/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>sliding window O(minSize * n) time O(n) space<br>这道题的trick是如果maxSize的子串多次出现则minSize的子串只会出现更多次因为短子串一定包含在长子串里，所以只需要检查minSize子串即可！！</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxFreq</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">int</span> maxLetters, <span class="keyword">int</span> minSize, <span class="keyword">int</span> maxSize)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; f;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>, r = <span class="number">0</span>; r &lt; size(s); ++r) &#123;</span><br><span class="line">            ++m[s[r]];</span><br><span class="line">            <span class="keyword">if</span> (r &gt;= minSize) &#123;</span><br><span class="line">                <span class="keyword">if</span> (--m[s[l]] == <span class="number">0</span>) &#123;</span><br><span class="line">                    m.erase(s[l]);</span><br><span class="line">                &#125;</span><br><span class="line">                ++l;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (r &gt;= minSize - <span class="number">1</span> &amp;&amp; size(m) &lt;= maxLetters) &#123;</span><br><span class="line">                res = max(res, ++f[s.substr(l, minSize)]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/20/1297-Maximum-Number-of-Occurrences-of-a-Substring/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1257,7 +1265,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">407</span>
+          <span class="site-state-item-count">408</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1336,13 +1344,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">606k</span>
+    <span title="Symbols count total">608k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">9:11</span>
+    <span title="Reading time total">9:12</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

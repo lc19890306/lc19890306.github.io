@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">407</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">408</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -207,6 +207,118 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/17/214-Shortest-Palindrome/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/17/214-Shortest-Palindrome/" class="post-title-link" itemprop="url">214. Shortest Palindrome</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-17 21:46:16" itemprop="dateCreated datePublished" datetime="2021-01-17T21:46:16-05:00">2021-01-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-18 10:39:30" itemprop="dateModified" datetime="2021-01-18T10:39:30-05:00">2021-01-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/17/214-Shortest-Palindrome/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/17/214-Shortest-Palindrome/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>4.2k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>4 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>rolling hash O(n) time O(n) space</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">shortestPalindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.empty()) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">r</span><span class="params">(rbegin(s), rend(s))</span></span>;</span><br><span class="line">        <span class="keyword">long</span> M = INT_MAX, B = <span class="number">256</span>;</span><br><span class="line">        <span class="keyword">int</span> n = size(s);</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; <span class="title">p</span><span class="params">(n, <span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            p[i] = (p[i - <span class="number">1</span>] * B) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> sh = <span class="number">0</span>, rh = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            sh = (sh * B + s[i]) % M;</span><br><span class="line">            rh = (rh * B + r[i]) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sh == rh &amp;&amp; s.compare(<span class="number">0</span>, n, r, <span class="number">0</span>, n) == <span class="number">0</span>) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            sh = (sh + M - s[n - i] * p[i - <span class="number">1</span>] % M) % M;</span><br><span class="line">            rh = (rh + M - r[i - <span class="number">1</span>] * p[n - i] % M) % M;</span><br><span class="line">            <span class="keyword">if</span> (sh == rh * p[i] % M &amp;&amp; s.compare(<span class="number">0</span>, n - i, r, i, n - i) == <span class="number">0</span>) <span class="keyword">return</span> r.substr(<span class="number">0</span>, i) + s;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">shortestPalindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.empty()) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">r</span><span class="params">(rbegin(s), rend(s))</span></span>;</span><br><span class="line">        <span class="keyword">long</span> M = INT_MAX, B = <span class="number">256</span>;</span><br><span class="line">        <span class="keyword">int</span> n = size(s);</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; <span class="title">p</span><span class="params">(n, <span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            p[i] = (p[i - <span class="number">1</span>] * B) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> sh = <span class="number">0</span>, rh = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            sh = (sh + s[i] * p[i]) % M;</span><br><span class="line">            rh = (rh + r[i] * p[i]) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sh == rh &amp;&amp; s.compare(<span class="number">0</span>, n, r, <span class="number">0</span>, n) == <span class="number">0</span>) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            sh = (sh + M - s[n - i] * p[n - i] % M) % M;</span><br><span class="line">            rh = (rh + M - r[i - <span class="number">1</span>] * p[i - <span class="number">1</span>] % M) % M;</span><br><span class="line">            <span class="keyword">if</span> ((sh * p[i]) % M == rh &amp;&amp; s.compare(<span class="number">0</span>, n - i, r, i, n - i) == <span class="number">0</span>) <span class="keyword">return</span> r.substr(<span class="number">0</span>, i) + s;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">shortestPalindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.empty()) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">r</span><span class="params">(rbegin(s), rend(s))</span></span>;</span><br><span class="line">        <span class="keyword">long</span> M = INT_MAX, B = <span class="number">256</span>;</span><br><span class="line">        <span class="keyword">int</span> n = size(s);</span><br><span class="line">        vector&lt;long&gt; p(n, 1), sh(n), rh(n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            p[i] = (p[i - <span class="number">1</span>] * B) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        sh[<span class="number">0</span>] = s[<span class="number">0</span>];</span><br><span class="line">        rh[<span class="number">0</span>] = r[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            sh[i] = (sh[i - <span class="number">1</span>] + s[i] * p[i]) % M;</span><br><span class="line">            rh[i] = (rh[i - <span class="number">1</span>] + r[i] * p[i]) % M;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sh[n - <span class="number">1</span>] == rh[n - <span class="number">1</span>] &amp;&amp; s.compare(<span class="number">0</span>, n, r, <span class="number">0</span>, n) == <span class="number">0</span>) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">auto</span> a = (sh[n - i - <span class="number">1</span>] * p[i]) % M;</span><br><span class="line">            <span class="keyword">auto</span> b = (rh[n - <span class="number">1</span>] + M - rh[i - <span class="number">1</span>]) % M;</span><br><span class="line">            <span class="keyword">if</span> (a == b &amp;&amp; s.compare(<span class="number">0</span>, n - i, r, i, n - i) == <span class="number">0</span>) <span class="keyword">return</span> r.substr(<span class="number">0</span>, i) + s;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>O(n<sup>2</sup>)递归版<br>KMP可以实现O(n)<br>我们使用双指针来找出字符串s的最长回文前缀的大概范围，指针i和j分别指向s串的开头和末尾，若 s[i] 和 s[j] 相等，则i自增1，j自减1，否则只有j自减1。这样遍历一遍后，最长回文前缀就在范围 [0, i) 中，但不保证这个本身就是最大回文前缀，我们只能确定后面剩余的部分肯定不属于，此时我们提取出剩下的字符，翻转一下加到最前面，而对范围 [0, i) 内的子串再次递归调用本函数，这样，在子函数最终会组成最短的回文串，从而使得整个的回文串就是最短的<br>Each iteration of shortestPalindrome is linear in size of substring and the maximum number of recursive calls can be n/2 times as shown in the Intuition section.<br>Let the time complexity of the algorithm be T(n). Since, at the each step for the worst case, the string can be divide into 2 parts and we require only one part for further computation. Hence, the time complexity for the worst case can be represented as : T(n)=T(n-2)+O(n)T(n)=T(n−2)+O(n). So, T(n) = O(n) + O(n-2) + O(n-4) + … + O(1)T(n)=O(n)+O(n−2)+O(n−4)+…+O(1) which is O(n<sup>2</sup>)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">shortestPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = n - <span class="number">1</span>; j &gt;= <span class="number">0</span>;--j) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == s[j]) &#123;</span><br><span class="line">                ++i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (i == n) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="built_in">string</span> prefix = s.substr(i);</span><br><span class="line">        reverse(prefix.begin(), prefix.end());</span><br><span class="line">        <span class="built_in">string</span> mid = shortestPalindrome(s.substr(<span class="number">0</span>, i));</span><br><span class="line">        <span class="keyword">return</span> prefix + mid + s.substr(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>iterative O(n<sup>2</sup>) time</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">shortestPalindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = size(s);</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">r</span><span class="params">(rbegin(s), rend(s))</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.compare(<span class="number">0</span>, n - i, r, i, n - i) == <span class="number">0</span>) <span class="keyword">return</span> r.substr(<span class="number">0</span>, i) + s; <span class="comment">// 避免copy</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>TLE O(n<sup>2</sup>) time</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">shortestPalindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = size(s);</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">r</span><span class="params">(rbegin(s), rend(s))</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.substr(<span class="number">0</span>, n - i) == r.substr(i)) <span class="keyword">return</span> r.substr(<span class="number">0</span>, i) + s;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>错误dp版本O(n<sup>2</sup>) time O(n<sup>2</sup>) space<br>题目要求只能在前面加，这个版本是可以在任何位置加</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">shortestPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.empty()) <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="built_in">string</span> t = s;</span><br><span class="line">        reverse(t.begin(), t.end());</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(n + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n + <span class="number">1</span>));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s[i - <span class="number">1</span>] == t[j - <span class="number">1</span>]) &#123;</span><br><span class="line">                    f[i][j] = f[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    f[i][j] = max(f[i][j - <span class="number">1</span>], f[i - <span class="number">1</span>][j]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">string</span> res;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n, j = n; i &gt; <span class="number">0</span> || j &gt; <span class="number">0</span>;) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">                res += t[j - <span class="number">1</span>];</span><br><span class="line">                --j;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j == <span class="number">0</span>) &#123;</span><br><span class="line">                res += s[i - <span class="number">1</span>];</span><br><span class="line">                --i;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (s[i - <span class="number">1</span>] == t[j - <span class="number">1</span>]) &#123;</span><br><span class="line">                res += s[i - <span class="number">1</span>];</span><br><span class="line">                --i;</span><br><span class="line">                --j;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (f[i][j] == f[i][j - <span class="number">1</span>]) &#123;</span><br><span class="line">                    res += t[j - <span class="number">1</span>];</span><br><span class="line">                    --j;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    res += s[i - <span class="number">1</span>];</span><br><span class="line">                    --i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1112,104 +1224,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/17/739-Daily-Temperatures/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/17/739-Daily-Temperatures/" class="post-title-link" itemprop="url">739. Daily Temperatures</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-17 15:49:13 / Modified: 15:51:49" itemprop="dateCreated datePublished" datetime="2021-01-17T15:49:13-05:00">2021-01-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/17/739-Daily-Temperatures/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/17/739-Daily-Temperatures/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>872</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>decreasing stack O(n) time O(n) space<br>维护一个单调递减栈，栈里存下标，每次遇到更高的温度，对栈里的下标对应的结果进行更新后弹出</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dailyTemperatures</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; temperatures)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = temperatures.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">res</span><span class="params">(n)</span></span>;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">while</span> (!s.empty() &amp;&amp; temperatures[s.top()] &lt; temperatures[i]) &#123;</span><br><span class="line">                res[s.top()] = i - s.top();</span><br><span class="line">                s.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            s.push(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>从后往前维护一个单调递减栈，栈里存下标，每次判断当前下标和栈里第一个符合要求的下标的间距即可</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dailyTemperatures</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; temperatures)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = temperatures.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">res</span><span class="params">(n)</span></span>;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">            <span class="keyword">while</span> (!s.empty() &amp;&amp; temperatures[s.top()] &lt;= temperatures[i]) &#123;</span><br><span class="line">                s.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            res[i] = s.empty() ? <span class="number">0</span> : (s.top() - i);</span><br><span class="line">            s.push(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1279,7 +1293,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">407</span>
+          <span class="site-state-item-count">408</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1358,13 +1372,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">606k</span>
+    <span title="Symbols count total">608k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">9:11</span>
+    <span title="Reading time total">9:12</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

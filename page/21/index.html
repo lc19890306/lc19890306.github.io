@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">407</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">408</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -207,6 +207,104 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/09/1439-Find-the-Kth-Smallest-Sum-of-a-Matrix-With-Sorted-Rows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/09/1439-Find-the-Kth-Smallest-Sum-of-a-Matrix-With-Sorted-Rows/" class="post-title-link" itemprop="url">1439. Find the Kth Smallest Sum of a Matrix With Sorted Rows</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-09 12:57:13 / Modified: 13:02:19" itemprop="dateCreated datePublished" datetime="2021-01-09T12:57:13-05:00">2021-01-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/09/1439-Find-the-Kth-Smallest-Sum-of-a-Matrix-With-Sorted-Rows/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/09/1439-Find-the-Kth-Smallest-Sum-of-a-Matrix-With-Sorted-Rows/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.2k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>2 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>O(mklog(min(n, k))) time O(min(n, k)) space<br><a target="_blank" rel="noopener" href="https://leetcode.com/problems/find-k-pairs-with-smallest-sums/">373. Find K Pairs with Smallest Sums</a>的followup<br>不要想复杂了！！！直接做m - 1遍就行了<br>利用这种原理还可以做并行的两两merge</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">kSmallestPairs</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums1.empty() || nums2.empty() || k == <span class="number">0</span>) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="keyword">using</span> pii = <span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;;</span><br><span class="line">        <span class="keyword">auto</span> cmp = [&amp;nums1, &amp;nums2](<span class="keyword">const</span> pii &amp;a, <span class="keyword">const</span> pii &amp;b) &#123; <span class="keyword">return</span> nums1[a.first] + nums2[a.second] &gt; nums1[b.first] + nums2[b.second]; &#125;;</span><br><span class="line">        <span class="built_in">priority_queue</span>&lt;pii, <span class="built_in">vector</span>&lt;pii&gt;, <span class="keyword">decltype</span>(cmp)&gt; q(cmp);</span><br><span class="line">        <span class="keyword">int</span> m = nums1.size(), n = nums2.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, sz = min(k, n); j &lt; sz; ++j) &#123;</span><br><span class="line">            q.emplace(<span class="number">0</span>, j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">while</span> (k-- &gt; <span class="number">0</span> &amp;&amp; !q.empty()) &#123;</span><br><span class="line">            <span class="keyword">auto</span> [i, j] = q.top(); q.pop();</span><br><span class="line">            res.push_back(nums1[i] + nums2[j]);</span><br><span class="line">            <span class="keyword">if</span> (i + <span class="number">1</span> &lt; m) &#123;</span><br><span class="line">                q.emplace(i + <span class="number">1</span>, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; mat, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = mat.size(), n = min((<span class="keyword">int</span>)mat[<span class="number">0</span>].size(), k);</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v</span><span class="params">(begin(mat[<span class="number">0</span>]), begin(mat[<span class="number">0</span>]) + n)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">1</span>; r &lt; m; ++r) &#123;</span><br><span class="line">            v = kSmallestPairs(v, mat[r], k);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> v.back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>并行merge版<br>跟<a target="_blank" rel="noopener" href="https://leetcode.com/problems/merge-k-sorted-lists/">23. Merge k Sorted Lists</a>思路一样</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">kSmallestPairs</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">0</span>) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="keyword">if</span> (nums1.empty()) <span class="keyword">return</span> nums2;</span><br><span class="line">        <span class="keyword">if</span> (nums2.empty()) <span class="keyword">return</span> nums1;</span><br><span class="line">        <span class="keyword">using</span> pii = <span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;;</span><br><span class="line">        <span class="keyword">auto</span> cmp = [&amp;nums1, &amp;nums2](<span class="keyword">const</span> pii &amp;a, <span class="keyword">const</span> pii &amp;b) &#123; <span class="keyword">return</span> nums1[a.first] + nums2[a.second] &gt; nums1[b.first] + nums2[b.second]; &#125;;</span><br><span class="line">        <span class="built_in">priority_queue</span>&lt;pii, <span class="built_in">vector</span>&lt;pii&gt;, <span class="keyword">decltype</span>(cmp)&gt; q(cmp);</span><br><span class="line">        <span class="keyword">int</span> m = nums1.size(), n = nums2.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, sz = min(k, n); j &lt; sz; ++j) &#123;</span><br><span class="line">            q.emplace(<span class="number">0</span>, j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">while</span> (k-- &gt; <span class="number">0</span> &amp;&amp; !q.empty()) &#123;</span><br><span class="line">            <span class="keyword">auto</span> [i, j] = q.top(); q.pop();</span><br><span class="line">            res.push_back(nums1[i] + nums2[j]);</span><br><span class="line">            <span class="keyword">if</span> (i + <span class="number">1</span> &lt; m) &#123;</span><br><span class="line">                q.emplace(i + <span class="number">1</span>, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; mat, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = size(mat);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> step = <span class="number">1</span>; step &lt; m; step &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i + step &lt; m; i += (step &lt;&lt; <span class="number">1</span>)) &#123;</span><br><span class="line">                mat[i] = kSmallestPairs(mat[i], mat[i + step], k);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mat[<span class="number">0</span>].back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1090,110 +1188,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/08/487-Max-Consecutive-Ones-II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/08/487-Max-Consecutive-Ones-II/" class="post-title-link" itemprop="url">487. Max Consecutive Ones II</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-08 19:53:49" itemprop="dateCreated datePublished" datetime="2021-01-08T19:53:49-05:00">2021-01-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-30 23:26:31" itemprop="dateModified" datetime="2021-01-30T23:26:31-05:00">2021-01-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/08/487-Max-Consecutive-Ones-II/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/08/487-Max-Consecutive-Ones-II/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>627</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>O(n) time O(1) space<br>followup for infinite stream</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMaxConsecutiveOnes</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, c0 = <span class="number">0</span>, c1 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (x == <span class="number">1</span>) &#123;</span><br><span class="line">                ++c0;</span><br><span class="line">                ++c1;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                c1 = c0 + <span class="number">1</span>;</span><br><span class="line">                c0 = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            res = max(res, c1);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>找最长的子数组最多只包含一个0</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMaxConsecutiveOnes</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>, r = <span class="number">0</span>, cnt = <span class="number">0</span>, n = size(nums); r &lt; n; ++r) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[r] == <span class="number">0</span>) &#123;</span><br><span class="line">                ++cnt;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (cnt &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[l] == <span class="number">0</span>) &#123;</span><br><span class="line">                    --cnt;</span><br><span class="line">                &#125;</span><br><span class="line">                ++l;</span><br><span class="line">            &#125;</span><br><span class="line">            res = max(res, r - l + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1263,7 +1257,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">407</span>
+          <span class="site-state-item-count">408</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1342,13 +1336,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">606k</span>
+    <span title="Symbols count total">608k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">9:11</span>
+    <span title="Reading time total">9:12</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

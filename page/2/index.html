@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">416</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">417</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -207,6 +207,111 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/29/1335-Minimum-Difficulty-of-a-Job-Schedule/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/29/1335-Minimum-Difficulty-of-a-Job-Schedule/" class="post-title-link" itemprop="url">1335. Minimum Difficulty of a Job Schedule</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-29 02:12:03 / Modified: 02:14:18" itemprop="dateCreated datePublished" datetime="2021-01-29T02:12:03-05:00">2021-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/29/1335-Minimum-Difficulty-of-a-Job-Schedule/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/29/1335-Minimum-Difficulty-of-a-Job-Schedule/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>5.3k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>5 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>decreasing stack + dp O(nd) time O(n) space<br>f[i]表示经过day天后截至jobDifficulty[i]的最小困难结果，即f[day][i]<br>因为f[day][i] = min{f[day - 1][j] + max{jobDifficulty[j + 1 : i]}}，假设jobDifficulty[j]是jobDifficulty[i]左边第一个更大的数，则max{jobDifficulty[j + 1 : i]} = jobDifficulty[i]<br>f[day][i] = min{f[day][j], min{f[day - 1][j + 1 : i - 1]} + jobDifficulty[i]}<br>因为jobDifficulty[j] &gt; jobDifficulty[i]，所以f[day][j]的最后一个区间一定也可以cover整个jobDifficulty[j + 1 : i]区间，且根据归纳法f[day][j]一定不会比f[day - 1][j] + jobDifficulty[i]更差<br>找jobDifficulty[j]左边第一个更大的jobDifficulty[i]可以用单调栈，求min{f[day - 1][j + 1 : i - 1]}可以利用单调栈顺便保存每个小区间的前一天的最小困难结果，具体而言，如果单调栈所存下标为 k<sub>1</sub>,k<sub>2</sub>,…,k<sub>n</sub>，则在 k<sub>1</sub>的位置上额外存储区间[0, k<sub>1</sub>)的最小值，在k<sub>2</sub>的位置上额外存储区间[k<sub>1</sub>, k<sub>2</sub>)的最小值，以此类推</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDifficulty</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; jobDifficulty, <span class="keyword">int</span> d)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = size(jobDifficulty);</span><br><span class="line">        <span class="keyword">if</span> (n &lt; d) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> M = <span class="number">3e5</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">f</span><span class="params">(n)</span></span>;</span><br><span class="line">        f[<span class="number">0</span>] = jobDifficulty[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            f[i] = max(f[i - <span class="number">1</span>], jobDifficulty[i]); <span class="comment">// 先算出第一天后的结果</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">t</span><span class="params">(n)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> day = <span class="number">1</span>; day &lt; d; ++day) &#123; <span class="comment">// d是1-based改成0-based</span></span><br><span class="line">            swap(t, f);</span><br><span class="line">            <span class="built_in">stack</span>&lt;<span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; s; <span class="comment">// &lt;区间最小困难结果，下标&gt;</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = day; i &lt; n; ++i) &#123;</span><br><span class="line">                <span class="keyword">int</span> p = t[i - <span class="number">1</span>]; <span class="comment">// 初始化为前一天截至jobDifficulty[i - 1]的最小困难结果</span></span><br><span class="line">                <span class="keyword">while</span> (!empty(s) &amp;&amp; jobDifficulty[s.top().second] &lt;= jobDifficulty[i]) &#123;</span><br><span class="line">                    p = min(p, s.top().first); <span class="comment">// 用前一天前一个区间的最小困难结果来更新</span></span><br><span class="line">                    s.pop();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (empty(s)) &#123;</span><br><span class="line">                    f[i] = p + jobDifficulty[i]; <span class="comment">// min&#123;f[day - 1][0 : i - 1]&#125; + jobDifficulty[i]</span></span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    f[i] = min(p + jobDifficulty[i], f[s.top().second]); <span class="comment">// min&#123;f[day][j], min&#123;f[day - 1][j + 1 : i - 1]&#125; + jobDifficulty[i]&#125;</span></span><br><span class="line">                &#125;</span><br><span class="line">                s.emplace(p, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDifficulty</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; jobDifficulty, <span class="keyword">int</span> d)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = size(jobDifficulty);</span><br><span class="line">        <span class="keyword">if</span> (n &lt; d) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> M = <span class="number">3e5</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">f</span><span class="params">(n)</span></span>;</span><br><span class="line">        f[<span class="number">0</span>] = jobDifficulty[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            f[i] = max(f[i - <span class="number">1</span>], jobDifficulty[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">t</span><span class="params">(f)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> day = <span class="number">1</span>; day &lt; d; ++day) &#123;</span><br><span class="line">            swap(t, f);</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="built_in">array</span>&lt;<span class="keyword">int</span>, 3&gt;&gt; s&#123;&#123;M, M, M&#125;&#125;;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = day; i &lt; n; ++i) &#123;</span><br><span class="line">                <span class="keyword">int</span> p = t[i - <span class="number">1</span>];</span><br><span class="line">                <span class="keyword">while</span> (s.back()[<span class="number">1</span>] &lt;= jobDifficulty[i]) &#123;</span><br><span class="line">                    p = min(p, s.back()[<span class="number">0</span>]);</span><br><span class="line">                    s.pop_back();</span><br><span class="line">                &#125;</span><br><span class="line">                s.push_back(&#123;p, jobDifficulty[i], min(p + jobDifficulty[i], s.back()[<span class="number">2</span>])&#125;);</span><br><span class="line">                f[i] = s.back()[<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDifficulty</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; jobDifficulty, <span class="keyword">int</span> d)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = size(jobDifficulty);</span><br><span class="line">        <span class="keyword">if</span> (n &lt; d) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> M = <span class="number">3e5</span> + <span class="number">1</span>;</span><br><span class="line">        vector&lt;int&gt; f(n, M), t(n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> day = <span class="number">0</span>; day &lt; d; ++day) &#123;</span><br><span class="line">            swap(t, f);</span><br><span class="line">            <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = day; i &lt; n; ++i) &#123;</span><br><span class="line">                f[i] = i &gt; <span class="number">0</span> ? t[i - <span class="number">1</span>] + jobDifficulty[i] : jobDifficulty[i];</span><br><span class="line">                <span class="keyword">while</span> (!empty(s) &amp;&amp; jobDifficulty[s.top()] &lt;= jobDifficulty[i]) &#123;</span><br><span class="line">                    f[i] = min(f[i], f[s.top()] - jobDifficulty[s.top()] + jobDifficulty[i]);</span><br><span class="line">                    s.pop();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (!empty(s)) &#123;</span><br><span class="line">                    f[i] = min(f[i], f[s.top()]);</span><br><span class="line">                &#125;</span><br><span class="line">                s.push(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>bottom-up dp O(nnd) time O(nd) space<br>f[day][i]表示到第day天安排前i个job的最小难度<br>转移方程为<br>f[day][i] = min{f[day - 1][j] + max{jobDifficulty[j : i - 1]}} where j ~ [day - 1, i - 1]<br>初始化<br>f[0][0] = 0表示到第0天安排前0个job的最小难度为0<br>其他都为inf，在之后的计算过程中凡是有f[day][i] where i &lt; day的理论上都应该为inf<br>最终结果<br>f[d][n]<br>计算顺序<br>从前往后扫每天day，对于每天day，从前往后遍历每个i，再对每个i从后往前尝试每个j</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDifficulty</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; jobDifficulty, <span class="keyword">int</span> d)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = size(jobDifficulty);</span><br><span class="line">        <span class="keyword">if</span> (n &lt; d) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> M = <span class="number">3e5</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(d + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n + <span class="number">1</span>, M));</span><br><span class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> day = <span class="number">1</span>; day &lt;= d; ++day) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = day; i &lt;= n; ++i) &#123;</span><br><span class="line">                <span class="keyword">int</span> mx = INT_MIN;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt;= day - <span class="number">1</span>; --j) &#123; <span class="comment">// j &gt;= 0也可以但是实际上应该是j &gt;= day - 1因为不可能出现比day - 1更小的j</span></span><br><span class="line">                    mx = max(mx, jobDifficulty[j]);</span><br><span class="line">                    f[day][i] = min(f[day][i], f[day - <span class="number">1</span>][j] + mx);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[d][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>rolling array优化<br>O(nnd) time O(n) space<br>需要注意的是计算每个f[day][i]之前必须要重置为inf</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDifficulty</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; jobDifficulty, <span class="keyword">int</span> d)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = size(jobDifficulty);</span><br><span class="line">        <span class="keyword">if</span> (n &lt; d) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> M = <span class="number">3e5</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(<span class="number">2</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n + <span class="number">1</span>, M));</span><br><span class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> day = <span class="number">1</span>; day &lt;= d; ++day) &#123;</span><br><span class="line">            <span class="keyword">int</span> dd = day &amp; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = day; i &lt;= n; ++i) &#123;</span><br><span class="line">                <span class="keyword">int</span> mx = INT_MIN;</span><br><span class="line">                f[dd][i] = M;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt;= day - <span class="number">1</span>; --j) &#123;</span><br><span class="line">                    mx = max(mx, jobDifficulty[j]);</span><br><span class="line">                    f[dd][i] = min(f[dd][i], f[dd ^ <span class="number">1</span>][j] + mx);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[d &amp; <span class="number">1</span>][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDifficulty</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; jobDifficulty, <span class="keyword">int</span> d)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = size(jobDifficulty);</span><br><span class="line">        <span class="keyword">if</span> (n &lt; d) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> M = <span class="number">3e5</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(<span class="number">2</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n + <span class="number">1</span>, M));</span><br><span class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> day = <span class="number">1</span>; day &lt;= d; ++day) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = day; i &lt;= n; ++i) &#123;</span><br><span class="line">                <span class="keyword">int</span> mx = INT_MIN;</span><br><span class="line">                f[day &amp; <span class="number">1</span>][i] = M;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt;= day - <span class="number">1</span>; --j) &#123;</span><br><span class="line">                    mx = max(mx, jobDifficulty[j]);</span><br><span class="line">                    f[day &amp; <span class="number">1</span>][i] = min(f[day &amp; <span class="number">1</span>][i], f[(day - <span class="number">1</span>) &amp; <span class="number">1</span>][j] + mx);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[d &amp; <span class="number">1</span>][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>一维数组优化<br>O(nnd) time O(n) space<br>注意到每一行只跟前一行有关，对于每天day，可以改成从后往前遍历每个i，再对每个i从后往前尝试每个j</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDifficulty</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; jobDifficulty, <span class="keyword">int</span> d)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = size(jobDifficulty);</span><br><span class="line">        <span class="keyword">if</span> (n &lt; d) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> M = <span class="number">3e5</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">f</span><span class="params">(n + <span class="number">1</span>, M)</span></span>;</span><br><span class="line">        f[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> day = <span class="number">1</span>; day &lt;= d; ++day) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &gt;= day; --i) &#123;</span><br><span class="line">                f[i] = M;</span><br><span class="line">                <span class="keyword">int</span> mx = INT_MIN;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt;= day - <span class="number">1</span>; --j) &#123;</span><br><span class="line">                    mx = max(mx, jobDifficulty[j]);</span><br><span class="line">                    f[i] = min(f[i], f[j] + mx);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1134,102 +1239,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/20/674-Longest-Continuous-Increasing-Subsequence/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/20/674-Longest-Continuous-Increasing-Subsequence/" class="post-title-link" itemprop="url">674. Longest Continuous Increasing Subsequence</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-20 23:33:42 / Modified: 23:36:39" itemprop="dateCreated datePublished" datetime="2021-01-20T23:33:42-05:00">2021-01-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/20/674-Longest-Continuous-Increasing-Subsequence/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/20/674-Longest-Continuous-Increasing-Subsequence/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>279</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>O(n)</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLengthOfLCIS</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> prev = INT_MIN;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> curr : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (prev &lt; curr) &#123;</span><br><span class="line">                ++cnt;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                cnt = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            prev = curr;</span><br><span class="line">            res = max(res, cnt);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1299,7 +1308,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-count">417</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1378,13 +1387,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">617k</span>
+    <span title="Symbols count total">618k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">9:21</span>
+    <span title="Reading time total">9:22</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

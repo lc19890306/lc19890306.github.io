@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">431</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">434</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -207,6 +207,314 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/25/666-Path-Sum-IV/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/25/666-Path-Sum-IV/" class="post-title-link" itemprop="url">666. Path Sum IV</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-25 15:32:38 / Modified: 15:35:07" itemprop="dateCreated datePublished" datetime="2021-01-25T15:32:38-05:00">2021-01-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/25/666-Path-Sum-IV/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/25/666-Path-Sum-IV/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>2 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>dfs O(32) time O(16) space<br>generic</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">pathSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; t;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x : nums) &#123;</span><br><span class="line">            t[x / <span class="number">10</span>] = x % <span class="number">10</span>; <span class="comment">// 利用现有父子关系</span></span><br><span class="line">        &#125;</span><br><span class="line">        dfs(t, <span class="number">11</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; &amp;t, <span class="keyword">int</span> i, <span class="keyword">int</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!t.count(i)) <span class="keyword">return</span>;</span><br><span class="line">        s += t[i];</span><br><span class="line">        <span class="keyword">int</span> r = i + <span class="number">10</span> + i % <span class="number">10</span>, l = r - <span class="number">1</span>; <span class="comment">// 33-&gt;45和46即33-&gt;43然后43+3得到46再-1得到45</span></span><br><span class="line">        <span class="keyword">if</span> (!t.count(l) &amp;&amp; !t.count(r)) &#123;</span><br><span class="line">            res += s;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        dfs(t, l, s);</span><br><span class="line">        dfs(t, r, s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/25/666-Path-Sum-IV/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/21/hexo-title%E4%B8%AD%E6%9C%89%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E6%8A%A5%E9%94%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/21/hexo-title%E4%B8%AD%E6%9C%89%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E6%8A%A5%E9%94%99/" class="post-title-link" itemprop="url">hexo title中有特殊字符报错（转）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-21 23:09:24 / Modified: 23:11:52" itemprop="dateCreated datePublished" datetime="2021-01-21T23:09:24-05:00">2021-01-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/21/hexo-title%E4%B8%AD%E6%9C%89%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E6%8A%A5%E9%94%99/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/21/hexo-title中有特殊字符报错/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>问题：<br>在使用hexo写文章时，如果文章的title中包含双引号”abc”、&dollar;符号时会编译出错，文章无法渲染。<br>由于这里的写法是yml语法，”、&dollar;这些都是特殊符号，执行hexo -s时到编译title这里就会出现错误</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Shell中<span class="variable">$i</span> $() <span class="variable">$&#123;&#125;</span>的区别</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>解决办法<br>这里我们需要对特殊符号进行转义，用对应的THML字符实体进行替换，例如&dollar;对应$，如此等等。<br>转移之后的标题就变成了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Shell中\&amp;<span class="comment">#36;i \&amp;#36;&amp;#40;&amp;#41; \&amp;#36;&amp;#123;&amp;#125;的区别</span></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>附录：各种常用特殊字符对应的HTML字符实体</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">! &amp;<span class="comment">#33; — 惊叹号 Exclamation mark</span></span><br><span class="line"><span class="string">&quot; &amp;#34; &amp;quot; — 双引号 Quotation mark</span></span><br><span class="line"><span class="string"># &amp;#35; — 数字标志 Number sign</span></span><br><span class="line"><span class="string">$ &amp;#36; — 美元标志 Dollar sign</span></span><br><span class="line"><span class="string">% &amp;#37; — 百分号 Percent sign</span></span><br><span class="line"><span class="string">&amp; &amp;#38; &amp;amp; — 与符号(&amp;) Ampersand</span></span><br><span class="line"><span class="string">&#x27; &amp;#39; — 单引号 Apostrophe</span></span><br><span class="line"><span class="string">( &amp;#40; — 小括号左边部分 Left parenthesis</span></span><br><span class="line"><span class="string">) &amp;#41; — 小括号右边部分 Right parenthesis</span></span><br><span class="line"><span class="string">* &amp;#42; — 星号 Asterisk</span></span><br><span class="line"><span class="string">+ &amp;#43; — 加号 Plus sign</span></span><br><span class="line"><span class="string">&lt; &amp;#60; &amp;lt; 小于号 Less than</span></span><br><span class="line"><span class="string">= &amp;#61; — 等于符号 Equals sign</span></span><br><span class="line"><span class="string">- &amp;#45; &amp;minus; — 减号</span></span><br><span class="line"><span class="string">&gt; &amp;#62; &amp;gt; — 大于号 Greater than</span></span><br><span class="line"><span class="string">? &amp;#63; — 问号 Question mark</span></span><br><span class="line"><span class="string">@ &amp;#64; — Commercial at</span></span><br><span class="line"><span class="string">[ &amp;#91; — 中括号左边部分 Left square bracket</span></span><br><span class="line"><span class="string">\ &amp;#92; — 反斜杠 Reverse solidus (backslash)</span></span><br><span class="line"><span class="string">] &amp;#93; — 中括号右边部分 Right square bracket</span></span><br><span class="line"><span class="string">&#123; &amp;#123; — 大括号左边部分 Left curly brace</span></span><br><span class="line"><span class="string">| &amp;#124; — 竖线Vertical bar</span></span><br><span class="line"><span class="string">&#125; &amp;#125; — 大括号右边部分 Right curly brace</span></span><br><span class="line"><span class="string">空格 &amp;nbsp;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
+    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/21/432-All-O-one-Data-Structure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chang Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind palace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/21/432-All-O-one-Data-Structure/" class="post-title-link" itemprop="url">432. All O`one Data Structure</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-21 21:10:29 / Modified: 22:36:00" itemprop="dateCreated datePublished" datetime="2021-01-21T21:10:29-05:00">2021-01-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/21/432-All-O-one-Data-Structure/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/21/432-All-O-one-Data-Structure/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>4.2k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>4 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>list是bidirectional iterator支持++和–</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AllOne</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">    AllOne() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Inserts a new key &lt;Key&gt; with value 1. Or increments an existing key by 1. */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">inc</span><span class="params">(<span class="built_in">string</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (key2bucket.count(key) == <span class="number">0</span>) &#123;</span><br><span class="line">            key2bucket[key] = buckets.insert(buckets.end(), &#123;<span class="number">0</span>, &#123;key&#125;&#125;); <span class="comment">// 找不到『旧bucket』就先插一个</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">auto</span> curr = key2bucket[key], prev = <span class="built_in">std</span>::prev(curr);</span><br><span class="line">        <span class="keyword">if</span> (curr == buckets.begin() || prev-&gt;value &gt; curr-&gt;value + <span class="number">1</span>) &#123;</span><br><span class="line">            prev = buckets.insert(curr, &#123;curr-&gt;value + <span class="number">1</span>, &#123;&#125;&#125;); <span class="comment">// 如果没有『新bucket』就插一个</span></span><br><span class="line">        &#125;</span><br><span class="line">        prev-&gt;keys.insert(key); <span class="comment">// 从旧bucket挪到新bucket</span></span><br><span class="line">        curr-&gt;keys.erase(key);</span><br><span class="line">        <span class="keyword">if</span> (curr-&gt;keys.empty()) &#123;</span><br><span class="line">            buckets.erase(curr);</span><br><span class="line">        &#125;</span><br><span class="line">        key2bucket[key] = prev;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Decrements an existing key by 1. If Key&#x27;s value is 1, remove it from the data structure. */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dec</span><span class="params">(<span class="built_in">string</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (key2bucket.count(key) == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">auto</span> curr = key2bucket[key], next = <span class="built_in">std</span>::next(curr);</span><br><span class="line">        key2bucket.erase(key); <span class="comment">// 先删key反正后边要不删了就删了要不写新key</span></span><br><span class="line">        <span class="keyword">if</span> (curr-&gt;value != <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (next == buckets.end() || curr-&gt;value - <span class="number">1</span> &gt; next-&gt;value) &#123;</span><br><span class="line">                next = buckets.insert(next, &#123;curr-&gt;value - <span class="number">1</span>, &#123;&#125;&#125;); <span class="comment">// 如果没有『新bucket』加一个</span></span><br><span class="line">            &#125;</span><br><span class="line">            next-&gt;keys.insert(key); <span class="comment">// 从旧bucket挪到新bucket</span></span><br><span class="line">            key2bucket[key] = next;</span><br><span class="line">        &#125;</span><br><span class="line">        curr-&gt;keys.erase(key);</span><br><span class="line">        <span class="keyword">if</span> (curr-&gt;keys.empty()) &#123;</span><br><span class="line">            buckets.erase(curr);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Returns one of the keys with maximal value. */</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">getMaxKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> buckets.empty() ? <span class="string">&quot;&quot;</span> : *begin(buckets.front().keys);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Returns one of the keys with Minimal value. */</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">getMinKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> buckets.empty() ? <span class="string">&quot;&quot;</span> : *begin(buckets.back().keys);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Bucket</span> &#123;</span></span><br><span class="line">        <span class="keyword">int</span> value = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; keys;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="built_in">list</span>&lt;Bucket&gt;::iterator&gt; key2bucket;</span><br><span class="line">    <span class="built_in">list</span>&lt;Bucket&gt; buckets;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your AllOne object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * AllOne obj = new AllOne();</span></span><br><span class="line"><span class="comment"> * obj.inc(key);</span></span><br><span class="line"><span class="comment"> * obj.dec(key);</span></span><br><span class="line"><span class="comment"> * string param_3 = obj.getMaxKey();</span></span><br><span class="line"><span class="comment"> * string param_4 = obj.getMinKey();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/21/432-All-O-one-Data-Structure/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -917,295 +1225,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/20/490-The-Maze/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/20/490-The-Maze/" class="post-title-link" itemprop="url">490. The Maze</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-20 22:55:20 / Modified: 22:55:54" itemprop="dateCreated datePublished" datetime="2021-01-20T22:55:20-05:00">2021-01-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/20/490-The-Maze/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/20/490-The-Maze/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>824</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>bfs O(mn) time O(mn) space<br>这道题的意思是球一直滚到撞墙才能停下换方向<br>bfs可以避免不必要的stackoverflow</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasPath</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; maze, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; start, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; destination)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = maze.size(), n = maze[<span class="number">0</span>].size();</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; s&#123;start[<span class="number">0</span>] * n + start[<span class="number">1</span>]&#125;; <span class="comment">// 先放起点去重</span></span><br><span class="line">        <span class="built_in">queue</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; q;</span><br><span class="line">        q.push(start);</span><br><span class="line">        <span class="keyword">int</span> dr[] = &#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, dc[] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">        <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">            <span class="keyword">auto</span> v = q.front(); q.pop();</span><br><span class="line">            <span class="keyword">if</span> (v == destination) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">                <span class="keyword">int</span> r = v[<span class="number">0</span>], c = v[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">while</span> (<span class="number">0</span> &lt;= r &amp;&amp; r &lt; m &amp;&amp; <span class="number">0</span> &lt;= c &amp;&amp; c &lt; n &amp;&amp; maze[r][c] == <span class="number">0</span>) &#123;</span><br><span class="line">                    r += dr[i];</span><br><span class="line">                    c += dc[i];</span><br><span class="line">                &#125;</span><br><span class="line">                r -= dr[i];</span><br><span class="line">                c -= dc[i];</span><br><span class="line">                <span class="keyword">if</span> (!s.count(r * n + c)) &#123;</span><br><span class="line">                    s.insert(r * n + c);</span><br><span class="line">                    q.push(&#123;r, c&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/20/218-The-Skyline-Problem/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/20/218-The-Skyline-Problem/" class="post-title-link" itemprop="url">218. The Skyline Problem</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-20 21:32:01 / Modified: 21:33:10" itemprop="dateCreated datePublished" datetime="2021-01-20T21:32:01-05:00">2021-01-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/20/218-The-Skyline-Problem/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/20/218-The-Skyline-Problem/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.8k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>2 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>sweep line O(nlogn)<br>使用map记录事件，然后遍历map进行事件处理<br>用一个multiset来从高到低维护所有楼高度的『开始』和『结束』，遇到开始则加入，遇到结束则删除（只删除一个instance），每次遇到『新高』（有可能是开始，也有可能是结束，每次都要先调整multiset之后再从multiset开头取出来『新高』），然后和之前记录的高度对比，如果一样则忽略，否则要记录下来并更新记录</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; getSkyline(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; buildings) &#123;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">bool</span>&gt;&gt;&gt; m; <span class="comment">// 用map记录所有『事件』用一个bool来表示楼的左边还是右边（开始还是结束）</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;b : buildings) &#123;</span><br><span class="line">            m[b[<span class="number">0</span>]].emplace_back(b[<span class="number">2</span>], <span class="literal">true</span>);</span><br><span class="line">            m[b[<span class="number">1</span>]].emplace_back(b[<span class="number">2</span>], <span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">multiset</span>&lt;<span class="keyword">int</span>, greater&lt;<span class="keyword">int</span>&gt;&gt; s; <span class="comment">// set不支持duplicate，priority_queue不支持删除任一元素，所以只能用multiset，从高到低记录每个高度的楼的左边和右边</span></span><br><span class="line">        <span class="keyword">int</span> pre = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;p : m) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;pp : p.second) &#123; <span class="comment">// 遍历每个位置的所有可能高度（『事件』），『开始』则向multiset里添加新高度，否则从中删除一个copy</span></span><br><span class="line">                <span class="keyword">if</span> (pp.second) &#123; <span class="comment">// 遇到『新高』则加入multiset</span></span><br><span class="line">                    s.emplace(pp.first);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    s.erase(s.find(pp.first)); <span class="comment">// 遇到某个楼的右边『结束』则从multiset删除指定iterator，不会影响其他相同元素</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> h = s.empty() ? <span class="number">0</span> : *s.begin();</span><br><span class="line">            <span class="keyword">if</span> (h != pre) &#123; <span class="comment">// 如果当前位置有『新高』，则跟之前的高度对比并记录下来</span></span><br><span class="line">                res.emplace_back(p.first, h);</span><br><span class="line">                pre = h;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; getSkyline(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; buildings) &#123;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">bool</span>&gt;&gt;&gt; m;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;b : buildings) &#123;</span><br><span class="line">            m[b[<span class="number">0</span>]].emplace_back(b[<span class="number">2</span>], <span class="literal">true</span>);</span><br><span class="line">            m[b[<span class="number">1</span>]].emplace_back(b[<span class="number">2</span>], <span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="built_in">multiset</span>&lt;<span class="keyword">int</span>, greater&lt;<span class="keyword">int</span>&gt;&gt; s;</span><br><span class="line">        <span class="keyword">int</span> prev = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[k, v] : m) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> [h, isL] : v) &#123;</span><br><span class="line">                <span class="keyword">if</span> (isL) &#123;</span><br><span class="line">                    s.insert(h);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    s.erase(s.find(h));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> mx = s.empty() ? <span class="number">0</span> : *begin(s);</span><br><span class="line">            <span class="keyword">if</span> (mx != prev) &#123;</span><br><span class="line">                res.push_back(&#123;k, mx&#125;);</span><br><span class="line">                prev = mx;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="English, Mandarin">
-    <link itemprop="mainEntityOfPage" href="http://changliu.us/2021/01/20/305-Number-of-Islands-II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chang Liu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mind palace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/20/305-Number-of-Islands-II/" class="post-title-link" itemprop="url">305. Number of Islands II</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-20 21:19:38 / Modified: 21:23:50" itemprop="dateCreated datePublished" datetime="2021-01-20T21:19:38-05:00">2021-01-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/01/20/305-Number-of-Islands-II/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/20/305-Number-of-Islands-II/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>997</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>union-find O(m*n+k) time O(m*n) space</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">numIslands2</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; positions)</span> </span>&#123;</span><br><span class="line">        parent.resize(m * n, <span class="number">-1</span>); <span class="comment">// 一定要用-1因为不是每个位置都是岛</span></span><br><span class="line">        <span class="keyword">int</span> dr[] = &#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, dc[] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;p : positions) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = p[<span class="number">0</span>] * n + p[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (parent[x] == <span class="number">-1</span>) &#123; <span class="comment">// 竟然有重复的position。。。</span></span><br><span class="line">                parent[x] = x;</span><br><span class="line">                ++cnt;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (isValid(p[<span class="number">0</span>] + dr[i], p[<span class="number">1</span>] + dc[i], m, n)) &#123;</span><br><span class="line">                        merge(x, (p[<span class="number">0</span>] + dr[i]) * n + p[<span class="number">1</span>] + dc[i]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            res.push_back(cnt);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValid</span><span class="params">(<span class="keyword">int</span> r, <span class="keyword">int</span> c, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span> &lt;= r &amp;&amp; r &lt; m &amp;&amp; <span class="number">0</span> &lt;= c &amp;&amp; c &lt; n &amp;&amp; parent[r * n + c] != <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (x != parent[x]) &#123;</span><br><span class="line">            x = parent[x] = parent[parent[x]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> px = find(x);</span><br><span class="line">        <span class="keyword">int</span> py = find(y);</span><br><span class="line">        <span class="keyword">if</span> (px != py) &#123;</span><br><span class="line">            --cnt;</span><br><span class="line">            parent[px] = py;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; parent;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1275,7 +1294,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">431</span>
+          <span class="site-state-item-count">434</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1354,13 +1373,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">630k</span>
+    <span title="Symbols count total">635k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">9:33</span>
+    <span title="Reading time total">9:37</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
